@@ -1,0 +1,13 @@
+CREATE TABLE  `mds`.`messages` (
+  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `MessageId` varchar(100) NOT NULL,
+  `DestServer` varchar(100) NOT NULL,
+  `NextServer` varchar(100) NOT NULL,
+  `DestApplication` varchar(100) NOT NULL,
+  `MessageData` blob NOT NULL,
+  `MessageDataLength` int(10) unsigned NOT NULL,
+  `RecordDate` datetime NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IX_Ser_App` (`NextServer`,`DestApplication`,`Id`) USING BTREE,
+  KEY `IX_Ser` (`NextServer`,`Id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin5;

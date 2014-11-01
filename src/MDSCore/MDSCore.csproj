@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AB59B8B2-D414-483F-AA72-A2644D92C86D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MDS</RootNamespace>
+    <AssemblyName>MDSCore</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Libraries\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Libraries\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Libraries\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Communication\CommunicationLayer.cs" />
+    <Compile Include="Communication\CommunicationManagerBase.cs" />
+    <Compile Include="Communication\CommunicatorBase.cs" />
+    <Compile Include="Communication\Events\CommunicatorConnectedEventArgs.cs" />
+    <Compile Include="Communication\Events\CommunicatorDisconnectedEventArgs.cs" />
+    <Compile Include="Communication\Events\CommunicatorStateChangedEventArgs.cs" />
+    <Compile Include="Communication\ICommunicationManager.cs" />
+    <Compile Include="Communication\ICommunicator.cs" />
+    <Compile Include="Communication\MDSRemoteApplication.cs" />
+    <Compile Include="Communication\MDSRemoteApplication.SubClasses.cs" />
+    <Compile Include="Communication\Events\MessageReceivedFromCommunicatorEventArgs.cs" />
+    <Compile Include="Communication\Events\MessageReceivedFromRemoteApplicationEventArgs.cs" />
+    <Compile Include="Communication\TCPCommunication\TCPClientConnectedEventArgs.cs" />
+    <Compile Include="Communication\TCPCommunication\TCPCommunicationManager.cs" />
+    <Compile Include="Communication\TCPCommunication\TCPCommunicator.cs" />
+    <Compile Include="Communication\TCPCommunication\TCPConnectionListener.cs" />
+    <Compile Include="Communication\WebServiceCommunication\WebServiceCommunicationManager.cs" />
+    <Compile Include="Communication\WebServiceCommunication\WebServiceCommunicator.cs" />
+    <Compile Include="MDSServer.cs" />
+    <Compile Include="Organization\MDSAdjacentServer.cs" />
+    <Compile Include="Organization\MDSClientApplicationList.cs" />
+    <Compile Include="Organization\MDSClientApplication.cs" />
+    <Compile Include="Organization\MDSController.cs" />
+    <Compile Include="Organization\MDSPersistentRemoteApplicationBase.cs" />
+    <Compile Include="Organization\MDSServerGraph.cs" />
+    <Compile Include="Organization\MDSServerNode.cs" />
+    <Compile Include="Organization\OrganizationLayer.cs" />
+    <Compile Include="Organization\Routing\DistributionStrategyBase.cs" />
+    <Compile Include="Organization\Routing\IDistributionStrategy.cs" />
+    <Compile Include="Organization\Routing\RandomDistribution.cs" />
+    <Compile Include="Organization\Routing\RoutingFilter.cs" />
+    <Compile Include="Organization\Routing\RoutingDestination.cs" />
+    <Compile Include="Organization\Routing\RoutingRule.cs" />
+    <Compile Include="Organization\Routing\RoutingTable.cs" />
+    <Compile Include="Organization\Routing\SequentialDistribution.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\ApplicationInfoItem.cs" />
+    <Compile Include="Settings\MDSDesignSettings.cs" />
+    <Compile Include="Settings\MDSSettings.cs" />
+    <Compile Include="Settings\RouteInfoItem.cs" />
+    <Compile Include="Settings\ServerDesignItem.cs" />
+    <Compile Include="Settings\ServerInfoItem.cs" />
+    <Compile Include="Storage\FaultToleratedStorageManagerWrapper.cs" />
+    <Compile Include="Storage\IStorageManager.cs" />
+    <Compile Include="Storage\MDSMessageRecord.cs" />
+    <Compile Include="Storage\MemoryStorage\MemoryStorageManager.cs" />
+    <Compile Include="Storage\MsSqlStorage\MsSqlStorageManager.cs" />
+    <Compile Include="Storage\MySqlStorage\MySqlNetStorageManager.cs" />
+    <Compile Include="Storage\MySqlStorage\MySqlODBCStorageManager.cs" />
+    <Compile Include="Storage\StorageManagerFactory.cs" />
+    <Compile Include="Storage\TableRecord.cs" />
+    <Compile Include="Storage\SQLiteStorage\SQLiteStorageManager.cs" />
+    <Compile Include="Web References\MDSAppWebServiceRef\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Changes.txt" />
+    <Content Include="Liscense.txt" />
+    <None Include="Web References\MDSAppWebServiceRef\MDSAppService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MDSAppWebServiceRef\MDSAppService.wsdl" />
+    <None Include="Web References\MDSAppWebServiceRef\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MDSCommonLib\MDSCommonLib.csproj">
+      <Project>{055149D1-A267-4E2E-B8AE-EA7848A45701}</Project>
+      <Name>MDSCommonLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost:2111/MDSWebServiceInterface/MDSAppService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MDSAppWebServiceRef\</RelPath>
+      <UpdateFromURL>http://localhost:2111/MDSWebServiceInterface/MDSAppService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>MDSCore_MDSAppWebServiceRef_MDSAppService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

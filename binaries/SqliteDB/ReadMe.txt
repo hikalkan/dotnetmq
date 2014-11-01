@@ -1,0 +1,1 @@
+MDS.s3db is an empty SQLite database file to be used in DotNetMQ.

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FD323317-5B22-413C-8ADC-6701C2B7EB76}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MDS</RootNamespace>
+    <AssemblyName>MDSManager</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Libraries\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Management\GUI\ClientApplications\AddNewApplicationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\ClientApplications\AddNewApplicationForm.Designer.cs">
+      <DependentUpon>AddNewApplicationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\ClientApplications\ApplicationListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\ClientApplications\ApplicationListForm.Designer.cs">
+      <DependentUpon>ApplicationListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\ClientApplications\EditApplicationWebServicesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\ClientApplications\EditApplicationWebServicesForm.Designer.cs">
+      <DependentUpon>EditApplicationWebServicesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\ConnectToServerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\ConnectToServerForm.Designer.cs">
+      <DependentUpon>ConnectToServerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\MDSServers\EditRouteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\MDSServers\EditRouteForm.Designer.cs">
+      <DependentUpon>EditRouteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\MDSServers\EditServerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\MDSServers\EditServerForm.Designer.cs">
+      <DependentUpon>EditServerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\MDSServers\RoutesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\MDSServers\RoutesForm.Designer.cs">
+      <DependentUpon>RoutesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\Tools\DoubleBufferedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\MDSServers\ServerGraphForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\GUI\MDSServers\ServerGraphForm.Designer.cs">
+      <DependentUpon>ServerGraphForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\GUI\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Management\GUI\ClientApplications\AddNewApplicationForm.resx">
+      <DependentUpon>AddNewApplicationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\GUI\ClientApplications\ApplicationListForm.resx">
+      <DependentUpon>ApplicationListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\GUI\ClientApplications\EditApplicationWebServicesForm.resx">
+      <DependentUpon>EditApplicationWebServicesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\GUI\ConnectToServerForm.resx">
+      <DependentUpon>ConnectToServerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\GUI\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\GUI\MDSServers\EditRouteForm.resx">
+      <DependentUpon>EditRouteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\GUI\MDSServers\EditServerForm.resx">
+      <DependentUpon>EditServerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\GUI\MDSServers\RoutesForm.resx">
+      <DependentUpon>RoutesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\GUI\MDSServers\ServerGraphForm.resx">
+      <DependentUpon>ServerGraphForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Changes.txt" />
+    <Content Include="Liscense.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MDSCommonLib\MDSCommonLib.csproj">
+      <Project>{055149D1-A267-4E2E-B8AE-EA7848A45701}</Project>
+      <Name>MDSCommonLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

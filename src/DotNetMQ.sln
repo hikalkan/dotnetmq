@@ -1,0 +1,94 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMQ", "DotNetMQ\DotNetMQ.csproj", "{7634394B-5A25-4DCC-849A-D7A8FDEFF9FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDSCommonLib", "MDSCommonLib\MDSCommonLib.csproj", "{055149D1-A267-4E2E-B8AE-EA7848A45701}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDSCore", "MDSCore\MDSCore.csproj", "{AB59B8B2-D414-483F-AA72-A2644D92C86D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDSManager", "MDSManager\MDSManager.csproj", "{FD323317-5B22-413C-8ADC-6701C2B7EB76}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{A5C714B5-FAB7-4934-9761-71E0CE785B8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDSServiceProxyGenerator", "Tools\MDSServiceProxyGenerator\MDSServiceProxyGenerator.csproj", "{B49D18FF-DD77-46A4-880A-F0B9598C6070}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{BC8AA727-4F74-4186-9018-95F4BA963DD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Databases", "Databases", "{49BF0DB3-6E82-414C-BAAE-03094AF323F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{05F27B70-CF54-4DFF-B6EB-C86D4352ACE1}"
+	ProjectSection(SolutionItems) = preProject
+		Dependencies\Libraries\log4net.dll = Dependencies\Libraries\log4net.dll
+		Dependencies\Libraries\log4net.xml = Dependencies\Libraries\log4net.xml
+		Dependencies\Libraries\MySql.Data.dll = Dependencies\Libraries\MySql.Data.dll
+		Dependencies\Libraries\System.Data.SQLite.dll = Dependencies\Libraries\System.Data.SQLite.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{D94CC304-A7EC-43EC-BE0F-E0EEFE8683F0}"
+	ProjectSection(SolutionItems) = preProject
+		Dependencies\Databases\MySQL\ReadMe.txt = Dependencies\Databases\MySQL\ReadMe.txt
+		Dependencies\Databases\MySQL\Tables.txt = Dependencies\Databases\MySQL\Tables.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{764E147F-65EF-486E-B470-BD74E93048A0}"
+	ProjectSection(SolutionItems) = preProject
+		Dependencies\Databases\SQLite\MDS.s3db = Dependencies\Databases\SQLite\MDS.s3db
+		Dependencies\Databases\SQLite\ReadMe.txt = Dependencies\Databases\SQLite\ReadMe.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9F4A05C3-ADFD-411D-9151-FBA5463C8441}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTest", "Tests\ServerTest\ServerTest.csproj", "{4B4B3551-78B8-4CE2-BD0A-98E8EC496E80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSSQL", "MSSQL", "{DFDDFE51-1B60-443B-888D-B4ACB3B0D0DB}"
+	ProjectSection(SolutionItems) = preProject
+		Dependencies\Databases\MSSQL\DB-FILES.zip = Dependencies\Databases\MSSQL\DB-FILES.zip
+		Dependencies\Databases\MSSQL\ReadMe.txt = Dependencies\Databases\MSSQL\ReadMe.txt
+		Dependencies\Databases\MSSQL\Tables.txt = Dependencies\Databases\MSSQL\Tables.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7634394B-5A25-4DCC-849A-D7A8FDEFF9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7634394B-5A25-4DCC-849A-D7A8FDEFF9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7634394B-5A25-4DCC-849A-D7A8FDEFF9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7634394B-5A25-4DCC-849A-D7A8FDEFF9FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{055149D1-A267-4E2E-B8AE-EA7848A45701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{055149D1-A267-4E2E-B8AE-EA7848A45701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{055149D1-A267-4E2E-B8AE-EA7848A45701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{055149D1-A267-4E2E-B8AE-EA7848A45701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB59B8B2-D414-483F-AA72-A2644D92C86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB59B8B2-D414-483F-AA72-A2644D92C86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB59B8B2-D414-483F-AA72-A2644D92C86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB59B8B2-D414-483F-AA72-A2644D92C86D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD323317-5B22-413C-8ADC-6701C2B7EB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD323317-5B22-413C-8ADC-6701C2B7EB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD323317-5B22-413C-8ADC-6701C2B7EB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD323317-5B22-413C-8ADC-6701C2B7EB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B49D18FF-DD77-46A4-880A-F0B9598C6070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B49D18FF-DD77-46A4-880A-F0B9598C6070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B49D18FF-DD77-46A4-880A-F0B9598C6070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B49D18FF-DD77-46A4-880A-F0B9598C6070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B4B3551-78B8-4CE2-BD0A-98E8EC496E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B4B3551-78B8-4CE2-BD0A-98E8EC496E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B4B3551-78B8-4CE2-BD0A-98E8EC496E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B4B3551-78B8-4CE2-BD0A-98E8EC496E80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B49D18FF-DD77-46A4-880A-F0B9598C6070} = {A5C714B5-FAB7-4934-9761-71E0CE785B8F}
+		{49BF0DB3-6E82-414C-BAAE-03094AF323F3} = {BC8AA727-4F74-4186-9018-95F4BA963DD0}
+		{05F27B70-CF54-4DFF-B6EB-C86D4352ACE1} = {BC8AA727-4F74-4186-9018-95F4BA963DD0}
+		{D94CC304-A7EC-43EC-BE0F-E0EEFE8683F0} = {49BF0DB3-6E82-414C-BAAE-03094AF323F3}
+		{764E147F-65EF-486E-B470-BD74E93048A0} = {49BF0DB3-6E82-414C-BAAE-03094AF323F3}
+		{DFDDFE51-1B60-443B-888D-B4ACB3B0D0DB} = {49BF0DB3-6E82-414C-BAAE-03094AF323F3}
+		{4B4B3551-78B8-4CE2-BD0A-98E8EC496E80} = {9F4A05C3-ADFD-411D-9151-FBA5463C8441}
+	EndGlobalSection
+EndGlobal

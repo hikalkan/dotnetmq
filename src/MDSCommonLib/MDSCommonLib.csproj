@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{055149D1-A267-4E2E-B8AE-EA7848A45701}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MDS</RootNamespace>
+    <AssemblyName>MDSCommonLib</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\MDSCommonLib.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Libraries\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\AppService\IMDSApplication.cs" />
+    <Compile Include="Client\AppService\IMDSServer.cs" />
+    <Compile Include="Client\AppService\MDSMessageProcessor.cs" />
+    <Compile Include="Client\AppService\MDSAppServiceBase.cs" />
+    <Compile Include="Client\AppService\MDSClientApplicationBase.cs" />
+    <Compile Include="Client\MDSRemoteAppEndPoint.cs" />
+    <Compile Include="Client\MDSServices\MDSRemoteInvokeMessage.cs" />
+    <Compile Include="Client\MDSServices\MDSRemoteInvokeReturnMessage.cs" />
+    <Compile Include="Client\MDSServices\MDSServiceApplication.cs" />
+    <Compile Include="Client\MDSServices\MDSService.cs" />
+    <Compile Include="Client\MDSServices\MDSServiceAttribute.cs" />
+    <Compile Include="Client\MDSServices\MDSServiceConsumer.cs" />
+    <Compile Include="Client\MDSServices\MDSServiceMethodParameterAttribute.cs" />
+    <Compile Include="Client\MDSServices\MDSServiceProxyBase.cs" />
+    <Compile Include="Client\MDSServices\MDSServiceMethodAttribute.cs" />
+    <Compile Include="Client\MessageAckStates.cs" />
+    <Compile Include="Client\MessageReceivedEventArgs.cs" />
+    <Compile Include="Client\IIncomingMessage.cs" />
+    <Compile Include="Client\IOutgoingMessage.cs" />
+    <Compile Include="Client\MDSClient.cs" />
+    <Compile Include="Client\WebServices\IWebServiceIncomingMessage.cs" />
+    <Compile Include="Client\WebServices\IWebServiceOutgoingMessage.cs" />
+    <Compile Include="Client\WebServices\IWebServiceResponseMessage.cs" />
+    <Compile Include="Client\WebServices\IWebServiceOperationResultMessage.cs" />
+    <Compile Include="Client\WebServices\WebServiceHelper.cs" />
+    <Compile Include="Communication\Channels\CommunicationStateChangedEventArgs.cs" />
+    <Compile Include="Communication\Channels\ICommunicationChannel.cs" />
+    <Compile Include="Communication\Channels\MessageReceivedEventArgs.cs" />
+    <Compile Include="Communication\Channels\TCPChannel.cs" />
+    <Compile Include="Communication\CommunicationConsts.cs" />
+    <Compile Include="Communication\CommunicationStates.cs" />
+    <Compile Include="Communication\CommunicationWays.cs" />
+    <Compile Include="Communication\CommunicatorTypes.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\AddNewApplicationMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\ApplicationWebServiceInfo.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\ClientApplicationRefreshEventMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\ClientApplicationRemovedEventMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\ControlMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\GetApplicationListMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\ControlMessageFactory.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\GetApplicationListResponseMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\GetApplicationWebServicesMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\GetApplicationWebServicesResponseMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\GetServerGraphMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\GetServerGraphResponseMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\RemoveApplicationMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\RemoveApplicationResponseMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\ServerGraphInfo.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\UpdateApplicationWebServicesMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\UpdateServerGraphMessage.cs" />
+    <Compile Include="Communication\Messages\ControllerMessages\OperationResultMessage.cs" />
+    <Compile Include="Communication\Messages\MDSChangeCommunicationWayMessage.cs" />
+    <Compile Include="Communication\Messages\MDSControllerMessage.cs" />
+    <Compile Include="Communication\Messages\MDSDataTransferResponseMessage.cs" />
+    <Compile Include="Communication\Messages\MDSMessageFactory.cs" />
+    <Compile Include="Communication\Protocols\IMDSWireProtocol.cs" />
+    <Compile Include="Communication\Protocols\MDSDefaultWireProtocol.cs" />
+    <Compile Include="Exceptions\MDSRemoteException.cs" />
+    <Compile Include="Exceptions\MDSSerializationException.cs" />
+    <Compile Include="GUI\MDSGuiHelper.cs" />
+    <Compile Include="Management\ControlMessageReceivedEventArgs.cs" />
+    <Compile Include="Management\MDSController.cs" />
+    <Compile Include="Serialization\IMDSSerializable.cs" />
+    <Compile Include="Communication\Messages\MDSDataTransferMessage.cs" />
+    <Compile Include="Communication\Messages\MDSMessage.cs" />
+    <Compile Include="Communication\Messages\MDSPingMessage.cs" />
+    <Compile Include="Communication\Messages\MDSRegisterMessage.cs" />
+    <Compile Include="Communication\Messages\MDSOperationResultMessage.cs" />
+    <Compile Include="Communication\Messages\MessageTransmitRules.cs" />
+    <Compile Include="Communication\Messages\ServerTransmitReport.cs" />
+    <Compile Include="Exceptions\MDSNoCommunicatorException.cs" />
+    <Compile Include="Exceptions\MDSDatabaseException.cs" />
+    <Compile Include="Exceptions\MDSException.cs" />
+    <Compile Include="Exceptions\MDSTimeoutException.cs" />
+    <Compile Include="GeneralHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\IMDSDeserializer.cs" />
+    <Compile Include="Serialization\IMDSSerializer.cs" />
+    <Compile Include="Serialization\MDSDefaultDeserializer.cs" />
+    <Compile Include="Serialization\MDSDefaultSerializer.cs" />
+    <Compile Include="Serialization\CreateSerializableObjectHandler.cs" />
+    <Compile Include="Serialization\MDSSerializationHelper.cs" />
+    <Compile Include="Threading\IRunnable.cs" />
+    <Compile Include="Threading\ProcessQueueItemHandler.cs" />
+    <Compile Include="Threading\QueueProcessorThread.cs" />
+    <Compile Include="Utils\MDSObjectCollection.cs" />
+    <Compile Include="Utils\RegistrySettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Changes.txt" />
+    <Content Include="Client\AppService\README.txt" />
+    <Content Include="Liscense.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,2 @@
+To create MySQL database for DotNetMQ, create a database in MySQL Server named 'mds' and run query in Tables.txt file.
+After creating database, you must configure MDSSettings.xml to use MySQL Server as DB engine in DotNetMQ.

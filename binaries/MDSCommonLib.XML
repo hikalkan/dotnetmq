@@ -1,0 +1,3601 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MDSCommonLib</name>
+    </assembly>
+    <members>
+        <member name="T:MDS.Communication.Messages.MDSDataTransferResponseMessage">
+            <summary>
+            This message is used to acknowledge/reject a message and to send a MDSDataTransferMessage in same message object.
+            It is used in web services.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.MDSMessage">
+            <summary>
+            Abstract class of all message classes.
+            All messages transmiting on MDS must be derrived from this class.
+            </summary>
+        </member>
+        <member name="T:MDS.Serialization.IMDSSerializable">
+            <summary>
+            This interface is implemented by all classes that can be serialized/deserialized by MDS Serialization.
+            </summary>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializable.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            This method serializes the object.
+            </summary>
+            <param name="serializer">Used to serialize object</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializable.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            This method deserializes the object.
+            </summary>
+            <param name="deserializer">Used to deserialize object</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSMessage.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSMessage.MessageTypeId">
+            <summary>
+            MessageTypeId of message.
+            It is used to serialize/deserialize message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSMessage.MessageId">
+            <summary>
+            Unique ID for this message.
+            Thiss will be a GUID if it is not set.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSMessage.RepliedMessageId">
+            <summary>
+            If this message is a reply for another message then RepliedMessageId contains first message's MessageId
+            else RepliedMessageId is null default.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSDataTransferResponseMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSDataTransferResponseMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferResponseMessage.MessageTypeId">
+            <summary>
+            MessageTypeId of message.
+            It is used to serialize/deserialize message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferResponseMessage.Result">
+            <summary>
+            This field is used to acknowledge/reject to an incoming message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferResponseMessage.Message">
+            <summary>
+            This field is used to send a new message.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.UpdateServerGraphMessage">
+            <summary>
+            This message is sent from MDS manager to MDS server to update server graph of MDS.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.ControlMessage">
+            <summary>
+            This is the base class for all messages that are being transmited between MDS server and Management (Controller) application.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ControlMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ControlMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ControlMessage.MessageTypeId">
+            <summary>
+            MessageTypeIf of message.
+            It is used to serialize/deserialize message.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.UpdateServerGraphMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.UpdateServerGraphMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.UpdateServerGraphMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for UpdateServerGraphMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.UpdateServerGraphMessage.ServerGraph">
+            <summary>
+            The ServerGraphInfo object that stores all server and graph informations.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.WebServices.WebServiceHelper">
+            <summary>
+            This class is used by MDS Web Services to serialize/deserialize/create messages.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.WebServices.WebServiceHelper.DeserializeMessage(System.Byte[])">
+            <summary>
+            Deserializes an incoming message for Web Service from MDS server.
+            </summary>
+            <param name="bytesOfMessage">Message as byte array</param>
+            <returns>Deserialized message</returns>
+        </member>
+        <member name="M:MDS.Client.WebServices.WebServiceHelper.SerializeMessage(MDS.Client.WebServices.IWebServiceResponseMessage)">
+            <summary>
+            Serializes a message to send to MDS server from Web Service.
+            </summary>
+            <param name="responseMessage">Message to serialize</param>
+            <returns>Serialized message</returns>
+        </member>
+        <member name="M:MDS.Client.WebServices.WebServiceHelper.CheckResponseMessage(MDS.Client.WebServices.IWebServiceResponseMessage)">
+            <summary>
+            Checks a response message whether it is a valid response message
+            </summary>
+            <param name="responseMessage">Message to check</param>
+        </member>
+        <member name="T:MDS.Client.WebServices.WebServiceHelper.IncomingDataMessage">
+            <summary>
+            Implements IWebServiceIncomingMessage to be used by MDS web service.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.MDSDataTransferMessage">
+            <summary>
+            Represents a Data Transfer message. 
+            Used to transfer real message data between client applications.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSDataTransferMessage.#ctor">
+            <summary>
+            Creates a new MDSDataTransferMessage object.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSDataTransferMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSDataTransferMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.MessageTypeId">
+            <summary>
+            MessageTypeId of message.
+            It is used to serialize/deserialize message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.SourceServerName">
+            <summary>
+            Name of the first source server of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.SourceApplicationName">
+            <summary>
+            Name of the first source application of the message.
+            If the message is created by an MDS (source of message is not an application)
+            then SourceApplicationName must be set to null.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.SourceCommunicatorId">
+            <summary>
+            The source communication channel's (Communicator's) Id.
+            When more than one communicator of an application is connected same MDS server
+            at the same time, this field may be used to indicates a spesific communicator.
+            This field is set by MDS automatically.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.DestinationServerName">
+            <summary>
+            Name of the final destination server of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.DestinationApplicationName">
+            <summary>
+            Name of the final destination application of the message.
+            If the message is sent to an MDS (destination of message is not an application),
+            then DestinationApplicationName must be set to null. 
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.DestinationCommunicatorId">
+            <summary>
+            Destination communication channel's (Communicator's) Id.
+            This field is used by MDS to deliver message to a spesific communicator.
+            When more than one communicator of an application is connected same MDS server
+            at the same time, this field may be used to indicate a spesific communicator as receiver of message.
+            If it is set to 0 (zero), message may be delivered to any connected communicator.
+            If there is no communicator with DestinationCommunicatorId, message can not be delivered, so,
+            this field can only be used to send non-persistent messages.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.PassedServers">
+            <summary>
+            Passed servers of message until now, includes source and destination servers.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.MessageData">
+            <summary>
+            Essential application message data to transfer.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSDataTransferMessage.TransmitRule">
+            <summary>
+            Transmit rule of message.
+            This is important because it determines persistence and transmit time of message.
+            Default: StoreAndForward.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.WebServices.IWebServiceIncomingMessage">
+            <summary>
+            Represents an incoming data message to a MDS Web Service from MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.MessageId">
+            <summary>
+            Gets the unique identifier for this message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.SourceServerName">
+            <summary>
+            Name of the first source server of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.SourceApplicationName">
+            <summary>
+            Name of the sender application of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.SourceCommunicatorId">
+            <summary>
+            The source communication channel's (Communicator's) unique Id.
+            When more than one communicator of an application is connected same MDS server
+            at the same time, this field may be used to indicate a spesific communicator.
+            This field is set by MDS automatically.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.DestinationServerName">
+            <summary>
+            Name of the final destination server of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.DestinationApplicationName">
+            <summary>
+            Name of the final destination application of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.PassedServers">
+            <summary>
+            Passed servers of message until now, includes source and destination servers.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.MessageData">
+            <summary>
+            Essential application message data that is received.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceIncomingMessage.TransmitRule">
+            <summary>
+            Transmit rule of message.
+            This is important because it determines persistence and transmit time of message.
+            Default: StoreAndForward.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.WebServices.WebServiceHelper.IncomingDataMessage.#ctor(MDS.Communication.Messages.MDSDataTransferMessage)">
+            <summary>
+            Creates a new IncomingDataMessage object from a MDSDataTransferMessage object.
+            </summary>
+            <param name="message">MDSDataTransferMessage object to create IncomingDataMessage</param>
+        </member>
+        <member name="M:MDS.Client.WebServices.WebServiceHelper.IncomingDataMessage.CreateResponseMessage">
+            <summary>
+            Creates IWebServiceResponseMessage using this incoming message, to return from web service to MDS server.
+            </summary>
+            <returns>Response message to this message</returns>
+        </member>
+        <member name="M:MDS.Client.WebServices.WebServiceHelper.IncomingDataMessage.CreateResponseDataMessage">
+            <summary>
+            Creates IWebServiceOutgoingMessage using this incoming message, to return from web service to MDS server.
+            </summary>
+            <returns>Response message to this message</returns>
+        </member>
+        <member name="T:MDS.Client.WebServices.WebServiceHelper.OutgoingDataMessage">
+            <summary>
+            Implements IWebServiceOutgoingMessage to be used by MDS web service.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.WebServices.IWebServiceOutgoingMessage">
+            <summary>
+            Represents an outgoing data message from a MDS web service to MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceOutgoingMessage.MessageData">
+            <summary>
+            Essential application message data to be sent.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.WebServices.WebServiceHelper.ResponseMessage">
+            <summary>
+            Implements IWebServiceResponseMessage to be used by MDS web service.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.WebServices.IWebServiceResponseMessage">
+            <summary>
+            Represents a response message to a IWebServiceIncomingMessage from a MDS web service.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceResponseMessage.Result">
+            <summary>
+            Process result of IWebServiceIncomingMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceResponseMessage.Message">
+            <summary>
+            Response message to IWebServiceIncomingMessage.
+            This may be null to do not send a response to incoming message.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.WebServices.WebServiceHelper.ResultMessage">
+            <summary>
+            Implements IWebServiceOperationResultMessage to be used by MDS web service.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.MDSOperationResultMessage">
+            <summary>
+            This message is sent to clients as a response to an operation.
+            It is generally used to send an ACK/Reject message for a message
+            or a response to register message.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSOperationResultMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSOperationResultMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSOperationResultMessage.MessageTypeId">
+            <summary>
+            MessageTypeId of message.
+            It is used to serialize/deserialize message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSOperationResultMessage.Success">
+            <summary>
+            Operation result.
+            True, if operation is successful.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSOperationResultMessage.ResultText">
+            <summary>
+            A text that may be used as a description for result of operation.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.WebServices.IWebServiceOperationResultMessage">
+            <summary>
+            Represents a result message for an incoming message to MDS Web Service.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceOperationResultMessage.Success">
+            <summary>
+            Operation result.
+            True, if operation is successful.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.WebServices.IWebServiceOperationResultMessage.ResultText">
+            <summary>
+            A text that may be used as a description for result of operation.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSService">
+            <summary>
+            Any MDSService class must be inherited from this class.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSService.GenerateProxyClass(System.String)">
+            <summary>
+            This method generates client proxy class to use this service.
+            It is also a MDSServiceMethod, so, clients can update it's proxy classes via calling this method remotely.
+            </summary>
+            <param name="namespaceName">Namespace of generating proxy class</param>
+            <returns>Proxy class code to use this service</returns>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSService.CheckServiceIsAvailable(System.String)">
+            <summary>
+            This method can be used to check if service is available.
+            </summary>
+            <param name="message">A string message</param>
+            <returns>Reply to message as formatted: "RE:message".</returns>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSService.NormalizeType(System.String)">
+            <summary>
+            Normalizes some known primitive types.
+            </summary>
+            <param name="typeName">Type name</param>
+            <returns>Normalized type name</returns>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSService.IsPredefinedMethod(System.String)">
+            <summary>
+            Checks if a method is predefined method (MDSService methods in MDSService class).
+            </summary>
+            <param name="methodName">Method name to check</param>
+            <returns>True: Yes, it is..</returns>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSService.RemoteApplication">
+            <summary>
+            When a method of a MDSService application is invoked, this field stores address of source application in MDS.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSService.IncomingMessage">
+            <summary>
+            When a method of a MDSService application is invoked, this field stores the original message that is sent by MDS server.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSRemoteInvokeReturnMessage">
+            <summary>
+            This message is sent as return message of a MDSRemoteInvokeMessage.
+            It is used to send return value of method invocation.
+            It is sent by MDSServiceApplication class and received by MDSServiceProxyBase class.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSRemoteInvokeReturnMessage.ReturnValue">
+            <summary>
+            Return value of remote method invocation.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSRemoteInvokeReturnMessage.RemoteException">
+            <summary>
+            If any exception occured during method invocation, this field contains Exception object.
+            If no exception occured, this field is null.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.UpdateApplicationWebServicesMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.UpdateApplicationWebServicesMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.UpdateApplicationWebServicesMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for GetApplicationWebServicesMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.UpdateApplicationWebServicesMessage.ApplicationName">
+            <summary>
+            Name of the application to get web service information.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.UpdateApplicationWebServicesMessage.WebServices">
+            <summary>
+            Web service communicators of application.
+            </summary>
+        </member>
+        <member name="T:MDS.Utils.MDSObjectCollection">
+            <summary>
+            Represents a thread-safe string-key based object collection.
+            </summary>
+        </member>
+        <member name="F:MDS.Utils.MDSObjectCollection._objects">
+            <summary>
+            All objects are stored in this collection.
+            </summary>
+        </member>
+        <member name="M:MDS.Utils.MDSObjectCollection.#ctor">
+            <summary>
+            Contructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Utils.MDSObjectCollection.Remove(System.String)">
+            <summary>
+            Removes an object from collection.
+            </summary>
+            <param name="key">Key of object to remove</param>
+        </member>
+        <member name="M:MDS.Utils.MDSObjectCollection.Clear">
+            <summary>
+            Rewmoves all keys/values from collection.
+            </summary>
+        </member>
+        <member name="P:MDS.Utils.MDSObjectCollection.SyncObj">
+            <summary>
+            Gets the synchronization object that is used by 
+            </summary>
+        </member>
+        <member name="P:MDS.Utils.MDSObjectCollection.Item(System.String)">
+            <summary>
+            Gets/sets an object with given key.
+            </summary>
+            <param name="key">Key</param>
+            <returns>Object with given key, or null if key does not exists</returns>
+        </member>
+        <member name="T:MDS.Serialization.IMDSSerializer">
+            <summary>
+            This interface is used to serialize primitives and objects.
+            Only needed Write methods designed for MDS.
+            </summary>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteByte(System.Byte)">
+            <summary>
+            Serializes a byte.
+            </summary>
+            <param name="b">byte to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteByteArray(System.Byte[])">
+            <summary>
+            Writes a byte array to serialization stream.
+            Byte array may be null or empty.
+            </summary>
+            <param name="bytes">byte array to write</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteInt32(System.Int32)">
+            <summary>
+            Serializes an integer.
+            </summary>
+            <param name="number">integer to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteUInt32(System.UInt32)">
+            <summary>
+            Serializes an unsigned integer.
+            </summary>
+            <param name="number">unsigned integer to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteInt64(System.Int64)">
+            <summary>
+            Serializes a long.
+            </summary>
+            <param name="number">long to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteBoolean(System.Boolean)">
+            <summary>
+            Serializes a boolean.
+            </summary>
+            <param name="b">boolean to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteDateTime(System.DateTime)">
+            <summary>
+            Serializes a DateTime object.
+            </summary>
+            <param name="dateTime">DateTime to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteCharUTF8(System.Char)">
+            <summary>
+            Serializes a char according to UTF8.
+            Char may be null or empty.
+            </summary>
+            <param name="c">char to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteStringUTF8(System.String)">
+            <summary>
+            Serializes a string according to UTF8.
+            String may be null or empty.
+            </summary>
+            <param name="text">string to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteObject(MDS.Serialization.IMDSSerializable)">
+            <summary>
+            Serializes an object that implements IMDSSerializable interface.
+            Object may be null.
+            </summary>
+            <param name="serializableObject">object to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.IMDSSerializer.WriteObjectArray(MDS.Serialization.IMDSSerializable[])">
+            <summary>
+            Serializes an array that all items implements IMDSSerializable interface.
+            Object array may be null or empty.
+            </summary>
+            <param name="serializableObjects">objects to serialize</param>
+        </member>
+        <member name="T:MDS.Communication.Messages.ServerTransmitReport">
+            <summary>
+            This class is used to store transmit informations of a message throught a server.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ServerTransmitReport.#ctor">
+            <summary>
+            Creates a new ServerTransmitReport.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ServerTransmitReport.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this object.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ServerTransmitReport.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this object.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ServerTransmitReport.ServerName">
+            <summary>
+            Name of the server.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ServerTransmitReport.ArrivingTime">
+            <summary>
+            Message arriving time to server.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ServerTransmitReport.LeavingTime">
+            <summary>
+            Message leaving time from server.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MessageReceivedHandler">
+            <summary>
+            A delegate to create events when a data transfer message received from MDS server.
+            </summary>
+            <param name="sender">The object which raises event</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="T:MDS.Client.MessageReceivedEventArgs">
+            <summary>
+            Stores message informations.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MessageReceivedEventArgs.Message">
+            <summary>
+            Received message from MDS server.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSServiceAttribute">
+            <summary>
+            Any MDSService class must has this attribute.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceAttribute.#ctor">
+            <summary>
+            Creates a new MDSServiceAttribute object.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceAttribute.Description">
+            <summary>
+            A brief description of Service.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceAttribute.Version">
+            <summary>
+            Service Version. This property can be used to indicate the code version (especially the version of service methods).
+            This value is sent to user application on an exception, so, user/client application can know that service version is changed.
+            Default value: NO_VERSION.
+            </summary>
+        </member>
+        <member name="T:MDS.Exceptions.MDSTimeoutException">
+            <summary>
+            Represents an Timeout exception.
+            </summary>
+        </member>
+        <member name="T:MDS.Exceptions.MDSException">
+            <summary>
+            Represents a MDS Exception.
+            This is the base class for exceptions that are thrown by MDS system.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSException.#ctor">
+            <summary>
+            Contstructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Contstructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSException.#ctor(System.String)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:MDS.Exceptions.MDSException.#ctor(System.String,System.Exception)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="M:MDS.Exceptions.MDSTimeoutException.#ctor">
+            <summary>
+            Contstructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSTimeoutException.#ctor(System.String)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:MDS.Exceptions.MDSTimeoutException.#ctor(System.String,System.Exception)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:MDS.Communication.Protocols.IMDSWireProtocol">
+            <summary>
+            This interface is used to Write/Read messages according to a Wire/Communication Protocol.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Protocols.IMDSWireProtocol.WriteMessage(MDS.Serialization.IMDSSerializer,MDS.Communication.Messages.MDSMessage)">
+            <summary>
+            Serializes and writes a MDSMessage according to the protocol rules.
+            </summary>
+            <param name="serializer">Serializer to serialize message</param>
+            <param name="message">Message to be serialized</param>
+        </member>
+        <member name="M:MDS.Communication.Protocols.IMDSWireProtocol.ReadMessage(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Reads and constructs a MDSMessage according to the protocol rules.
+            </summary>
+            <param name="deserializer">Deserializer to read message</param>
+            <returns>MDSMessage object that is read</returns>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesMessage">
+            <summary>
+            This message is used to get web services informations of an application from MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for GetApplicationWebServicesMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesMessage.ApplicationName">
+            <summary>
+            Name of the application to get web service information.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.ClientApplicationRemovedEventMessage">
+            <summary>
+            This message is sent to all connected MDS managers/controllers by MDS Server to inform when a client application is removed.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ClientApplicationRemovedEventMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ClientApplicationRemovedEventMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ClientApplicationRemovedEventMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for ClientApplicationRemovedEventMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ClientApplicationRemovedEventMessage.ApplicationName">
+            <summary>
+            Name of the new application.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.CommunicationConsts">
+            <summary>
+            This class stores some consts used in MDS.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationConsts.DefaultIpAddress">
+            <summary>
+            Default IP address to connect to MDS server.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationConsts.DefaultMDSPort">
+            <summary>
+            Default listening port of MDS server.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationConsts.MaxMessageSize">
+            <summary>
+            Maximum message data length.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MessageAckStates">
+            <summary>
+            Respesents states of an incoming message.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MessageAckStates.WaitingForAck">
+            <summary>
+            Message is waiting for Ack.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MessageAckStates.Acknowledged">
+            <summary>
+            Message is acknowledged.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MessageAckStates.Rejected">
+            <summary>
+            Message is rejected.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSServiceProxyBase">
+            <summary>
+            This is the base class for proxy classes that is used to make remote invocation to a MDSService.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSServices.MDSServiceProxyBase._serviceConsumer">
+            <summary>
+            Reference to the underlying MDSServiceConsumer object to send/receive MDS messages.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSServices.MDSServiceProxyBase._serviceClassName">
+            <summary>
+            Name of the service class. 
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceProxyBase.#ctor(MDS.Client.MDSServices.MDSServiceConsumer,MDS.Client.MDSRemoteAppEndPoint,System.String)">
+            <summary>
+            Initializes MDSServiceProxyBase.
+            </summary>
+            <param name="serviceConsumer">Reference to a MDSServiceConsumer object to send/receive MDS messages</param>
+            <param name="remoteEndPoint">Address of remote application</param>
+            <param name="serviceClassName">Name of the service class</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceProxyBase.InvokeRemoteMethodAndGetResult(System.String,System.Object[])">
+            <summary>
+            Sends remote method invocation message to the remote application and gets result.
+            This simplifies remove method invocation like calling a method locally.
+            It throws Exception if any Exception occured on remote application's method.
+            </summary>
+            <param name="methodName">Method name to invoke</param>
+            <param name="args">Method parameters</param>
+            <returns>Return value of remote method</returns>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceProxyBase.InvokeRemoteMethod(System.String,System.Object[])">
+            <summary>
+            Sends remote method invocation message to the remote application and gets result.
+            This simplifies remove method invocation like calling a method locally.
+            It throws Exception if any Exception occured on remote application's method.
+            </summary>
+            <param name="methodName">Method name to invoke</param>
+            <param name="args">Method parameters</param>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceProxyBase.RemoteApplication">
+            <summary>
+            MDS Address of remote application.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceProxyBase.TransmitRule">
+            <summary>
+            Transmit rule of underlying messages.
+            Using this peoperty, connection between applications can be changes from tight coupled to loose coupled and vice versa.
+            Just methods whose return type is void, can use other transmit rule than DirectlySend. So, that methods may be loose coupled by setting transmit rule.
+            Methods that has return value always use DirectlySend transmit rule, even if it is set by user to another rule. So, that methods must be tight coupled.
+            Default value: DirectlySend.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceProxyBase.Timeout">
+            <summary>
+            Timeout for service method calls as milliseconds.
+            Default: 300000 (5 minutes).
+            </summary>
+        </member>
+        <member name="T:MDS.Client.AppService.MDSMessageProcessor">
+            <summary> 
+            This class is used as base class for classes that are processing messages of an application concurrently. Thus,
+            an application can process more than one message in a time.
+            MDS creates an instance of this class for every incoming message to process it.
+            Maximum limit of messages that are being processed at the same time is configurable for individual applications.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.AppService.MDSAppServiceBase">
+            <summary>
+            Base class for MDSMessageProcessor/MDSClientApplicationBase.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.AppService.MDSAppServiceBase.Server">
+            <summary>
+            Reference to the MDS Server.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.AppService.MDSAppServiceBase.Application">
+            <summary>
+            Reference to this Application.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.AppService.MDSMessageProcessor.ProcessMessage(MDS.Client.IIncomingMessage)">
+            <summary>
+            This method is called by MDS server to process the message, when a message is sent to this application.
+            </summary>
+            <param name="message">Message to process</param>
+        </member>
+        <member name="P:MDS.Client.AppService.MDSMessageProcessor.AutoAcknowledgeMessages">
+            <summary>
+            Used to get/set if messages are auto acknowledged.
+            If AutoAcknowledgeMessages is true, then messages are automatically acknowledged after MessageReceived event,
+            if they are not acknowledged/rejected before by application.
+            Default: true.
+            </summary>
+        </member>
+        <member name="T:MDS.Threading.QueueProcessorThread`1">
+            <summary>
+            A threaded queue that process only one item in a time and keeps others in a queue.
+            </summary>
+            <typeparam name="T">Type of the processing item</typeparam>
+        </member>
+        <member name="T:MDS.Threading.IRunnable">
+            <summary>
+            This interface is used for a class that can startable and stoppable.
+            </summary>
+        </member>
+        <member name="M:MDS.Threading.IRunnable.Start">
+            <summary>
+            This method is used to start running.
+            </summary>
+        </member>
+        <member name="M:MDS.Threading.IRunnable.Stop(System.Boolean)">
+            <summary>
+            This method is used to stop running.
+            </summary>
+            <param name="waitToStop">Indicates that caller thread waits stopping of module</param>
+        </member>
+        <member name="M:MDS.Threading.IRunnable.WaitToStop">
+            <summary>
+            Joins module's thread until it stops.
+            </summary>
+        </member>
+        <member name="F:MDS.Threading.QueueProcessorThread`1._queue">
+            <summary>
+            Queue object to store items.
+            </summary>
+        </member>
+        <member name="F:MDS.Threading.QueueProcessorThread`1._thread">
+            <summary>
+            Running thread.
+            </summary>
+        </member>
+        <member name="F:MDS.Threading.QueueProcessorThread`1._running">
+            <summary>
+            Thread control flag.
+            </summary>
+        </member>
+        <member name="M:MDS.Threading.QueueProcessorThread`1.#ctor">
+            <summary>
+            Construnctor.
+            </summary>
+        </member>
+        <member name="M:MDS.Threading.QueueProcessorThread`1.Start">
+            <summary>
+            Starts the processing of items. Thread runs, listens and process items on queue.
+            </summary>
+        </member>
+        <member name="M:MDS.Threading.QueueProcessorThread`1.Stop(System.Boolean)">
+            <summary>
+            Stops the processing of items and stops the thread.
+            </summary>
+            <param name="waitToStop">True, if caller method must wait until running stops.</param>
+        </member>
+        <member name="M:MDS.Threading.QueueProcessorThread`1.WaitToStop">
+            <summary>
+            Waits stopping of thread, thus waits end of execution of currently processing item.
+            </summary>
+        </member>
+        <member name="M:MDS.Threading.QueueProcessorThread`1.Add(`0)">
+            <summary>
+            Adds given item to queue to process.
+            </summary>
+            <param name="queueItem"></param>
+        </member>
+        <member name="M:MDS.Threading.QueueProcessorThread`1.DoProcess">
+            <summary>
+            Thread's running method. Listens queue and processes items.
+            </summary>
+        </member>
+        <member name="M:MDS.Threading.QueueProcessorThread`1.OnProcessItem(`0,System.Int32)">
+            <summary>
+            This method is used to raise ProcessItem event.
+            </summary>
+            <param name="queueItem">The item that must be processed</param>
+            <param name="remainingItemCount">Waiting item count on queue except this one</param>
+        </member>
+        <member name="E:MDS.Threading.QueueProcessorThread`1.ProcessItem">
+            <summary>
+            This event is used to process get and process an item from queue. When an item inserted this
+            queue, ProcessItem event is raised.
+            </summary>
+        </member>
+        <member name="T:MDS.Exceptions.MDSNoCommunicatorException">
+            <summary>
+            This exception is thrown when there is not a communicator of a remote application.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSNoCommunicatorException.#ctor">
+            <summary>
+            Contstructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSNoCommunicatorException.#ctor(System.String)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:MDS.Exceptions.MDSNoCommunicatorException.#ctor(System.String,System.Exception)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:MDS.Management.ControlMessageReceivedHandler">
+            <summary>
+            A delegate to create events when a control message received from MDS server.
+            </summary>
+            <param name="sender">The object which raises event</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="T:MDS.Management.ControlMessageReceivedEventArgs">
+            <summary>
+            Stores message informations.
+            </summary>
+        </member>
+        <member name="M:MDS.Management.ControlMessageReceivedEventArgs.#ctor(MDS.Communication.Messages.ControllerMessages.ControlMessage)">
+            <summary>
+            Creates a ControlMessageReceivedEventArgs object.
+            </summary>
+            <param name="message">Received message from MDS server</param>
+        </member>
+        <member name="P:MDS.Management.ControlMessageReceivedEventArgs.Message">
+            <summary>
+            Received message from MDS server.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.CommunicationStates">
+            <summary>
+            Represents states of a communication object.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationStates.Connecting">
+            <summary>
+            Connecting now..
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationStates.Connected">
+            <summary>
+            Connection is established, communication can be made.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationStates.Closing">
+            <summary>
+            Closing connection..
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationStates.Closed">
+            <summary>
+            Connection is closed, so communication can not be made.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Channels.CommunicationStateChangedHandler">
+            <summary>
+            A delegate to create events for changing state of a communication channel.
+            Old state is passed with event arguments, new state can be get from communication channel object (sender).
+            </summary>
+            <param name="sender">The communication channel object which raises event</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="T:MDS.Communication.Channels.CommunicationStateChangedEventArgs">
+            <summary>
+            Stores informations about communication channel's state.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Channels.CommunicationStateChangedEventArgs.OldState">
+            <summary>
+            The state of the client before change.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.AppService.IMDSApplication">
+            <summary>
+            Represents a MDS Application from MDSMessageProcessor perspective.
+            This class also provides a static collection that can be used as a cache,
+            thus, an MDSMessageProcessor/MDSClientApplicationBase can store/get application-wide objects.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.AppService.IMDSApplication.ApplicationName">
+            <summary>
+            Name of the application.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.AppService.IMDSApplication.Item(System.String)">
+            <summary>
+            Gets/Sets application-wide object by a string key.
+            </summary>
+            <param name="key">Key of the object to access it</param>
+            <returns>Object, that is related with given key</returns>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.GetApplicationListMessage">
+            <summary>
+            This message is sent from MDS manager to MDS server to get list of all client applications.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationListMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for GetApplicationListMessage.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Channels.MessageReceivedHandler">
+            <summary>
+            A delegate to create events by Communication Channels, when a MDSMessage received from MDS server.
+            </summary>
+            <param name="sender">The object which raises event</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="T:MDS.Communication.Channels.MessageReceivedEventArgs">
+            <summary>
+            Stores message informations.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Channels.MessageReceivedEventArgs.Message">
+            <summary>
+            Received message from MDS server.
+            </summary>
+        </member>
+        <member name="T:MDS.Serialization.IMDSDeserializer">
+            <summary>
+            This interface is used to deserialize primitives and objects.
+            Only needed Read methods designed for MDS.
+            </summary>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadByte">
+            <summary>
+            Deserializes and returns a serialized byte.
+            </summary>
+            <returns>Deserialized byte</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadByteArray">
+            <summary>
+            Reads a byte array from deserializing stream.
+            Created byte array may be null or empty.
+            </summary>
+            <returns>Deserialized string</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadInt32">
+            <summary>
+            Deserializes and returns a serialized integer.
+            </summary>
+            <returns>Deserialized integer</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadUInt32">
+            <summary>
+            Deserializes and returns a serialized unsigned integer.
+            </summary>
+            <returns>Deserialized unsigned integer</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadInt64">
+            <summary>
+            Deserializes and returns a serialized long.
+            </summary>
+            <returns>Deserialized long</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadBoolean">
+            <summary>
+            Deserializes and returns a serialized boolean.
+            </summary>
+            <returns>Deserialized boolean</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadDateTime">
+            <summary>
+            Deserializes and returns a serialized DateTime object.
+            </summary>
+            <returns>Deserialized DateTime object</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadCharUTF8">
+            <summary>
+            Deserializes and returns a serialized char using UTF8.
+            </summary>
+            <returns>Deserialized char</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadStringUTF8">
+            <summary>
+            Deserializes and returns a serialized string using UTF8.
+            Created string may be null or empty.
+            </summary>
+            <returns>Deserialized string</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadObject``1(MDS.Serialization.CreateSerializableObjectHandler{``0})">
+            <summary>
+            Deserializes and returns an object that implements IMDSSerializable.
+            Object creation method is passed as parameter and used to create empty object.
+            Created object may be null.
+            </summary>
+            <typeparam name="T">A class that implements IMDSSerializable</typeparam>
+            <param name="createObjectHandler">A function that creates an empty T object</param>
+            <returns>Deserialized object</returns>
+        </member>
+        <member name="M:MDS.Serialization.IMDSDeserializer.ReadObjectArray``1(MDS.Serialization.CreateSerializableObjectHandler{``0})">
+            <summary>
+            Deserializes and returns an array of objects that implements IMDSSerializable.
+            Object creation method is passed as parameter and used to create empty object.
+            Created array may be null or empty.
+            </summary>
+            <typeparam name="T">A class that implements IMDSSerializable</typeparam>
+            <param name="createObjectHandler">A function that creates an empty T object</param>
+            <returns>Deserialized object</returns>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.OperationResultMessage">
+            <summary>
+            This message is used to get an operation result message.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.OperationResultMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.OperationResultMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.OperationResultMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for OperationResultMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.OperationResultMessage.Success">
+            <summary>
+            True, if operation is successfully executed.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.OperationResultMessage.ResultMessage">
+            <summary>
+            If Success = True then "Success.", else error message.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.ApplicationWebServiceInfo">
+            <summary>
+            Represents a web service communicator information for an application.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ApplicationWebServiceInfo.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ApplicationWebServiceInfo.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ApplicationWebServiceInfo.Url">
+            <summary>
+            Url of the web service.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.AddNewApplicationMessage">
+            <summary>
+            This message is sent by MDS Manager to MDS Server to add a new Application to MDS.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.AddNewApplicationMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.AddNewApplicationMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.AddNewApplicationMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for AddNewApplicationMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.AddNewApplicationMessage.ApplicationName">
+            <summary>
+            Name of the new application.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.AppService.MDSClientApplicationBase">
+            <summary>
+            Plug-In applications may derive this class to perform some operations on starting/stopping of MDS.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.AppService.MDSClientApplicationBase.OnStart">
+            <summary>
+            This method is called on startup of MDS.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.AppService.MDSClientApplicationBase.OnStop">
+            <summary>
+            This method is called on stopping of MDS.
+            </summary>
+        </member>
+        <member name="T:MDS.Utils.RegistrySettings">
+            <summary>
+            This class can be used to set/get settings to/from a registry key with caching capability.
+            </summary>
+        </member>
+        <member name="F:MDS.Utils.RegistrySettings.Logger">
+            <summary>
+            Reference to logger.
+            </summary>
+        </member>
+        <member name="F:MDS.Utils.RegistrySettings._cache">
+            <summary>
+            Cached settings.
+            </summary>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.#ctor(System.String)">
+            <summary>
+            Creates a new RegistrySettings instance.
+            </summary>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.GetIntegerValue(System.String,System.Int32)">
+            <summary>
+            Gets an integer value from registry. It gets from cache if it is cached before and Caching enables.
+            </summary>
+            <param name="registryName">Value Name on the registry key</param>
+            <param name="defaultValue">Default value, if no value exists on registry</param>
+            <returns>Value for registryName</returns>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.SetIntegerValue(System.String,System.Int32)">
+            <summary>
+            Sets an integer value to registry.
+            </summary>
+            <param name="registryName">Value Name on the registry key</param>
+            <param name="value">New value to set</param>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.GetStringValue(System.String,System.String)">
+            <summary>
+            Gets an string value from registry. It gets from cache if it is cached before and Caching enables.
+            </summary>
+            <param name="registryName">Value Name on the registry key</param>
+            <param name="defaultValue">Default value, if no value exists on registry</param>
+            <returns>Value for registryName</returns>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.SetStringValue(System.String,System.String)">
+            <summary>
+            Sets a string value to registry.
+            </summary>
+            <param name="registryName">Value Name on the registry key</param>
+            <param name="value">New value to set</param>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.SetValue(System.String,System.Object)">
+            <summary>
+            Sets a value to registry.
+            </summary>
+            <param name="registryName">Value Name on the registry key</param>
+            <param name="value">New value to set</param>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.CreateKey(System.String)">
+            <summary>
+            Creates a registry key.
+            </summary>
+            <param name="registryKey">Registry key to create</param>
+            <returns>Created registry key</returns>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.OpenOrCreateKey(System.String)">
+            <summary>
+            Tries open a registry key and return it as writable/readable.
+            If key doesn't exists then creates and returns it.
+            </summary>
+            <param name="registryKey">Registry key</param>
+            <returns>Registry key</returns>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.GetObjectFromRegistry(System.String,System.Object)">
+            <summary>
+            Gets a value from registry.
+            </summary>
+            <param name="name">Name in registry key</param>
+            <param name="defaultValue">Default value that is returned if name can not be found in registry key</param>
+            <returns>Value of name entry in registry key</returns>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.GetObjectFromRegistry(System.String,System.Object,System.Boolean)">
+            <summary>
+            Gets a value from registry.
+            </summary>
+            <param name="name">Name in registry key</param>
+            <param name="defaultValue">Default value that is returned if name can not be found in registry key</param>
+            <param name="createIfNeeded">If this is true and registryKey is not exists, then it is created</param>
+            <returns>Value of name entry in registry key</returns>
+        </member>
+        <member name="M:MDS.Utils.RegistrySettings.SetObjectOnRegistry(System.String,System.Object)">
+            <summary>
+            Sets a value on registry.
+            </summary>
+            <param name="name">Name in registry key</param>
+            <param name="value">value to set</param>
+        </member>
+        <member name="P:MDS.Utils.RegistrySettings.RegistryKey">
+            <summary>
+            Registry key to store settings of application.
+            </summary>
+        </member>
+        <member name="P:MDS.Utils.RegistrySettings.Caching">
+            <summary>
+            Indicates that if RegistrySettings uses caching.
+            </summary>
+        </member>
+        <member name="T:MDS.Threading.ProcessQueueItemHandler`1">
+            <summary>
+            A delegate to used by QueueProcessorThread to raise processing event
+            </summary>
+            <typeparam name="T">Type of the item to process</typeparam>
+            <param name="sender">The object which raises event</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="T:MDS.Threading.ProcessQueueItemEventArgs`1">
+            <summary>
+            Stores processing item and some informations about queue.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:MDS.Threading.ProcessQueueItemEventArgs`1.#ctor(`0,System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="processItem">The item to process</param>
+            <param name="queuedItemCount">The item count waiting for processing on queue (after this one)</param>
+        </member>
+        <member name="P:MDS.Threading.ProcessQueueItemEventArgs`1.ProcessItem">
+            <summary>
+            The item to process.
+            </summary>
+        </member>
+        <member name="P:MDS.Threading.ProcessQueueItemEventArgs`1.QueuedItemCount">
+            <summary>
+            The item count waiting for processing on queue (after this one).
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.MDSRegisterMessage">
+            <summary>
+            Register Message. A MDSRegisterMessage object is used to register a MDS server as an Application or MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSRegisterMessage.#ctor">
+            <summary>
+            Creates a new MDSRegisterMessage object.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSRegisterMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSRegisterMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSRegisterMessage.MessageTypeId">
+            <summary>
+            MessageTypeId of message.
+            It is used to serialize/deserialize message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSRegisterMessage.CommunicatorType">
+            <summary>
+            Communicator type (MDS server, Application or Controller). 
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSRegisterMessage.CommunicationWay">
+            <summary>
+            Communication way for this communicator (SEND, RECEIVE or BOTH)
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSRegisterMessage.Name">
+            <summary>
+            Name of the communicator. 
+            If CommunicatorType is a MDS, than this is server's name,
+            if CommunicatorType is an Application, than this is application's name,
+            if CommunicatorType is a Controller, than this is an arbitrary string represents controller.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSRegisterMessage.Password">
+            <summary>
+            Password to connect to MDS associated with Name and CommunicatorType.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.RemoveApplicationMessage">
+            <summary>
+            This message is sent by MDS Manager to MDS Server to remove a Application from MDS.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.RemoveApplicationMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.RemoveApplicationMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.RemoveApplicationMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for RemoveApplicationMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.RemoveApplicationMessage.ApplicationName">
+            <summary>
+            Name of the removing application.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage">
+            <summary>
+            This message is sent from MDS server to MDS manager as a response to GetApplicationListMessage message.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for GetApplicationListResponseMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.ClientApplications">
+            <summary>
+            List of client applications.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.ClientApplicationInfo">
+            <summary>
+            This class is used to transfer simple information about a MDS Client Application.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.ClientApplicationInfo.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.ClientApplicationInfo.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.ClientApplicationInfo.Name">
+            <summary>
+            Name of the client application
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationListResponseMessage.ClientApplicationInfo.CommunicatorCount">
+            <summary>
+            Currently connected (online) communicator count.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Channels.ICommunicationChannel">
+            <summary>
+            All Communication channels implements this interface.
+            It is used by MDSClient and MDSController classes to communicate with MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Channels.ICommunicationChannel.Connect">
+            <summary>
+            Connects to MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Channels.ICommunicationChannel.Disconnect">
+            <summary>
+            Disconnects from MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Channels.ICommunicationChannel.SendMessage(MDS.Communication.Messages.MDSMessage)">
+            <summary>
+            Sends a MDSMessage to the MDS server
+            </summary>
+            <param name="message">Message to be sent</param>
+        </member>
+        <member name="E:MDS.Communication.Channels.ICommunicationChannel.StateChanged">
+            <summary>
+            This event is raised when the state of the communication channel changes.
+            </summary>
+        </member>
+        <member name="E:MDS.Communication.Channels.ICommunicationChannel.MessageReceived">
+            <summary>
+            This event is raised when a MDSMessage object is received from MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Channels.ICommunicationChannel.ComminicatorId">
+            <summary>
+            Unique identifier for this communicator in connected MDS server.
+            This field is not set by communication channel,
+            it is set by another classes (MDSClient) that are using
+            communication channel. 
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Channels.ICommunicationChannel.State">
+            <summary>
+            Gets the state of communication channel.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Channels.ICommunicationChannel.CommunicationWay">
+            <summary>
+            Communication way for this channel.
+            This field is not set by communication channel,
+            it is set by another classes (MDSClient) that are using
+            communication channel. 
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSClient">
+            <summary>
+            This is the main class that is used by an client application to communicate with MDS server.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSClient.Logger">
+            <summary>
+            Reference to logger.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSClient._communicationChannel">
+            <summary>
+            Communication channel that is used to communicate with MDS server.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSClient._waitingMessages">
+            <summary>
+            This messages are waiting for a response.
+            Key: MessageID of waiting request message.
+            Value: A WaitingMessage instance.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSClient._incomingMessageQueue">
+            <summary>
+            This queue is used to queue and process sequentially messages that are received from MDS server.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSClient._reconnectTimer">
+            <summary>
+            This timer is used to reconnect to MDS server if it is disconnected.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSClient._running">
+            <summary>
+            Used to Start/Stop MDSClient, and indicates the state.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.#ctor(System.String)">
+            <summary>
+            Creates a new MDSClient object using default IP address (127.0.0.1) and default TCP port.
+            </summary>
+            <param name="applicationName">Name of the client application that connects to MDS server</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new MDSClient object using default TCP port.
+            </summary>
+            <param name="applicationName">Name of the client application that connects to MDS server</param>
+            <param name="ipAddress">Ip address of the MDS server</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.#ctor(System.String,System.String,System.Int32)">
+            <summary>
+            Creates a new MDSClient object.
+            </summary>
+            <param name="applicationName">Name of the client application that connects to MDS server</param>
+            <param name="ipAddress">Ip address of the MDS server</param>
+            <param name="port">Listening TCP Port of MDS server</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.Connect">
+            <summary>
+            Connects to MDS server.
+            If ReConnectServerOnError is true, than does not throw any Exception.
+            Else, throws Exception if can not connect to the Server.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.Disconnect">
+            <summary>
+            Disconnects from MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.CreateMessage">
+            <summary>
+            Creates an empty message to send.
+            </summary>
+            <returns>Created message</returns>
+        </member>
+        <member name="M:MDS.Client.MDSClient.Dispose">
+            <summary>
+            Disposes this object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.ConnectAndRegister">
+            <summary>
+            Connects and registers to MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.ChangeCommunicationWay(MDS.Communication.CommunicationWays)">
+            <summary>
+            Changes communication way of this application.
+            So, a receiver may want to do not receive messages anymore by changing it's communication way to 'Send'.
+            </summary>
+            <param name="newCommunicationWay">New communication way</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.SendAndWaitForReply(MDS.Communication.Messages.MDSMessage,System.Int32,System.Int32)">
+            <summary>
+            Sends a mssage to MDS server and waits a response for timeoutMilliseconds milliseconds.
+            </summary>
+            <param name="message">Message to send</param>
+            <param name="waitingResponseType">What type of response is being waited</param>
+            <param name="timeoutMilliseconds">Maximum waiting time for response</param>
+            <returns>Received message from server</returns>
+        </member>
+        <member name="M:MDS.Client.MDSClient.SendMessageInternal(MDS.Communication.Messages.MDSMessage)">
+            <summary>
+            Sends a MDSMessage object to MDS server.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.CommunicationChannel_StateChanged(MDS.Communication.Channels.ICommunicationChannel,MDS.Communication.Channels.CommunicationStateChangedEventArgs)">
+            <summary>
+            This method handles StateChanged event of communication channel.
+            </summary>
+            <param name="sender">The communication channel</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.CommunicationChannel_MessageReceived(MDS.Communication.Channels.ICommunicationChannel,MDS.Communication.Channels.MessageReceivedEventArgs)">
+            <summary>
+            This event handles incoming messages from communication channel.
+            </summary>
+            <param name="sender">Communication channel that received message</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.IncomingMessageQueue_ProcessItem(System.Object,MDS.Threading.ProcessQueueItemEventArgs{MDS.Communication.Messages.MDSMessage})">
+            <summary>
+            This event handles processing messages when a message is added to queue (_incomingMessageQueue).
+            </summary>
+            <param name="sender">Reference to message queue</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.ReconnectTimer_Tick(System.Object)">
+            <summary>
+            This method is called by _reconnectTimer_Tick to reconnect MDS server if disconnected.
+            </summary>
+            <param name="state">This argument is not used</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.SendPingMessageIfNeeded">
+            <summary>
+            Sends a Ping message to MDS server if 60 seconds passed after last communication.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.CloseCommunicationChannel">
+            <summary>
+            Closes communication channel, thus disconnects from MDS server if it is connected.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.IsConnectedToServer">
+            <summary>
+            Checks if client application is connected to MDS server.
+            </summary>
+            <returns>True, if connected.</returns>
+        </member>
+        <member name="E:MDS.Client.MDSClient.MessageReceived">
+            <summary>
+            This event is raised when a data transfer message received from MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.ApplicationName">
+            <summary>
+            Name of the client application.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.CommunicationWay">
+            <summary>
+            Gets/Sets Communication Way between MDS server.
+            A receiver may want to do not receive messages anymore, by changing it's communication way to 'Send'.
+            Setting this property sends a MDSChangeCommunicationWayMessage message to MDS server.
+            Default value: CommunicationWays.SendAndReceive
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.CommunicatorId">
+            <summary>
+            Communicator Id of this instance of application in MDS.
+            This field is valid only if client application is connected and registered to the MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.ReConnectServerOnError">
+            <summary>
+            Gets/sets Reconnecting option on any error case.
+            If this is true, client application attempts to reconnect to MDS server until it is connected and
+            doesn't throw exceptions while connecting. 
+            Default value: True.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.AutoAcknowledgeMessages">
+            <summary>
+            Used to get/set if messages are auto acknowledged.
+            If AutoAcknowledgeMessages is true, then messages are automatically acknowledged after MessageReceived event,
+            if they are not acknowledged/rejected before by application.
+            Default: false.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.DataMessageTimeout">
+            <summary>
+            Timeout value for outgoing data messages.
+            Default value: 300000 (5 minutes).
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.LastIncomingMessageTime">
+            <summary>
+            Time of last message received from MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.LastOutgoingMessageTime">
+            <summary>
+            Time of last message sent to MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.LastAcknowledgedMessageId">
+            <summary>
+            MessageId of last received and acknowledged message's Id.
+            This field is used to do not receive/accept same message again.
+            If a message is send by MDS server with same MessageId,
+            message is discarded and ACK message is sent to server.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSClient.IncomingDataMessage">
+            <summary>
+            Implements IIncomingMessage to send Ack/Reject via MDSClient.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.IIncomingMessage">
+            <summary>
+            Represents an incoming data message for a MDS client.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.IIncomingMessage.Acknowledge">
+            <summary>
+            Used to Acknowledge this message.
+            Confirms that the message is received safely by client application.
+            A message must be acknowledged by client application to remove message from message queue.
+            MDS server doesn't send next message to the client application until the message is acknowledged.
+            Also, MDS server sends same message again if the message is not acknowledged in a certain time.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.IIncomingMessage.Reject">
+            <summary>
+            Used to reject (to not acknowledge) this message.
+            Indicates that the message can not received correctly or can not handled the message, and the message 
+            must be sent to client application later again.
+            If MDS server gets reject for a message,
+            it doesn't send any message to the client application instance for a while.
+            If message is persistent, than it is sent to another instance of application or to same application instance again. 
+            If message is not persistent, it is deleted.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.IIncomingMessage.Reject(System.String)">
+            <summary>
+            Used to reject (to not acknowledge) this message.
+            Indicates that the message can not received correctly or can not handled the message, and the message 
+            must be sent to client application later again.
+            If MDS server gets reject for a message,
+            it doesn't send any message to the client application instance for a while.
+            If message is persistent, than it is sent to another instance of application or to same application instance again. 
+            If message is not persistent, it is deleted.
+            </summary>
+            <param name="reason">Reject reason</param>
+        </member>
+        <member name="M:MDS.Client.IIncomingMessage.CreateResponseMessage">
+            <summary>
+            Creates a empty response message for this message.
+            </summary>
+            <returns>Response message object</returns>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.AckState">
+            <summary>
+            Acknowledgment state of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.MessageId">
+            <summary>
+            Gets the unique identifier for this message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.RepliedMessageId">
+            <summary>
+            If this message is a reply for another message then RepliedMessageId contains first message's MessageId
+            else RepliedMessageId is null as default.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.SourceServerName">
+            <summary>
+            Name of the first source server of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.SourceApplicationName">
+            <summary>
+            Name of the sender application of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.SourceCommunicatorId">
+            <summary>
+            The source communication channel's (Communicator's) unique Id.
+            When more than one communicator of an application is connected same MDS server
+            at the same time, this field may be used to indicate a spesific communicator.
+            This field is set by MDS automatically.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.DestinationServerName">
+            <summary>
+            Name of the final destination server of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.DestinationApplicationName">
+            <summary>
+            Name of the final destination application of the message.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.DestinationCommunicatorId">
+            <summary>
+            Destination communication channel's (Communicator's) Id.
+            This field is used by MDS to deliver message to a spesific communicator.
+            When more than one communicator of an application is connected same MDS server
+            at the same time, this field may be used to indicate a spesific communicator as receiver of message.
+            If it is set to 0 (zero), message may be delivered to any connected communicator.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.PassedServers">
+            <summary>
+            Passed servers of message until now, includes source and destination servers.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.MessageData">
+            <summary>
+            Essential application message data that is received.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IIncomingMessage.TransmitRule">
+            <summary>
+            Transmit rule of message.
+            This is important because it determines persistence and transmit time of message.
+            Default: StoreAndForward.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSClient.IncomingDataMessage._client">
+            <summary>
+            Reference to the MDSClient object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.IncomingDataMessage.#ctor(MDS.Client.MDSClient,MDS.Communication.Messages.MDSDataTransferMessage)">
+            <summary>
+            Creates a new IncomingDataMessage object from a MDSDataTransferMessage object.
+            </summary>
+            <param name="client">Reference to the MDSClient object</param>
+            <param name="message">MDSDataTransferMessage object to create IncomingDataMessage</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.IncomingDataMessage.Acknowledge">
+            <summary>
+            Used to Acknowledge this message.
+            Confirms that the message is received safely by client application.
+            A message must be acknowledged by client application to remove message from message queue.
+            MDS server doesn't send next message to the client application until the message is acknowledged.
+            Also, MDS server sends same message again if the message is not acknowledged in a certain time.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.IncomingDataMessage.Reject">
+            <summary>
+            Used to reject (to not acknowledge) this message.
+            Indicates that the message can not received correctly or can not handled the message, and the message 
+            must be sent to client application later again.
+            If MDS server gets reject for a message,
+            it doesn't send any message to the client application instance for a while.
+            If message is persistent, than it is sent to another instance of application or to same application instance again. 
+            If message is not persistent, it is deleted.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.IncomingDataMessage.Reject(System.String)">
+            <summary>
+            Used to reject (to not acknowledge) this message.
+            Indicates that the message can not received correctly or can not handled the message, and the message 
+            must be sent to client application later again.
+            If MDS server gets reject for a message,
+            it doesn't send any message to the client application instance for a while.
+            If message is persistent, than it is sent to another instance of application or to same application instance again. 
+            If message is not persistent, it is deleted.
+            </summary>
+            <param name="reason">Reject reason</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.IncomingDataMessage.CreateResponseMessage">
+            <summary>
+            Creates a empty response message for this message.
+            </summary>
+            <returns>Response message object</returns>
+        </member>
+        <member name="P:MDS.Client.MDSClient.IncomingDataMessage.AckState">
+            <summary>
+            Acknowledgment state of the message.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSClient.OutgoingDataMessage">
+            <summary>
+            Implements IOutgoingMessage to send message via MDSClient.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.IOutgoingMessage">
+            <summary>
+            Represents an outgoing data message for a MDS client.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.IOutgoingMessage.Send">
+            <summary>
+            Sends the message to the MDS server.
+            If this method does not throw an exception,
+            message is correctly delivered to MDS server (persistent message)
+            or to the destination application (non persistent message).
+            </summary>
+        </member>
+        <member name="M:MDS.Client.IOutgoingMessage.Send(System.Int32)">
+            <summary>
+            Sends the message to the MDS server.
+            If this method does not throw an exception,
+            message is correctly delivered to MDS server (persistent message)
+            or to the destination application (non persistent message).
+            </summary>
+            <param name="timeoutMilliseconds">Timeout to send message as milliseconds</param>
+        </member>
+        <member name="M:MDS.Client.IOutgoingMessage.SendAndGetResponse">
+            <summary>
+            Sends the message and waits for an incoming message for that message.
+            MDS can be used for Request/Response type messaging with this method.
+            Default timeout value: 5 minutes.
+            </summary>
+            <returns>Response message</returns>
+        </member>
+        <member name="M:MDS.Client.IOutgoingMessage.SendAndGetResponse(System.Int32)">
+            <summary>
+            Sends the message and waits for an incoming message for that message.
+            MDS can be used for Request/Response type messaging with this method.
+            </summary>
+            <param name="timeoutMilliseconds">Timeout to get response message</param>
+            <returns>Response message</returns>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.MessageId">
+            <summary>
+            Unique ID for this message.
+            This will be a GUID if it is not set.
+            It is recommended to leave this field as default.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.RepliedMessageId">
+            <summary>
+            If this message is a reply for another message then RepliedMessageId contains first message's MessageId
+            else RepliedMessageId is null default.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.SourceServerName">
+            <summary>
+            Name of the first source server of the message.
+            If this field is leaved null/empty, it is set by MDS server automatically.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.SourceApplicationName">
+            <summary>
+            Name of the first sender application of the message.
+            If this field is leaved null/empty, it is set by MDS server as sender application's name automatically.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.DestinationServerName">
+            <summary>
+            Name of the final destination server of the message.
+            If this field is leaved null/empty, it is set by MDS server as
+            sender application's server's name automatically.
+            It may be leaved null to send a message to an application on the same server.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.DestinationApplicationName">
+            <summary>
+            Name of the final destination application of the message.
+            If this field is leaved null/empty, it is set by MDS server as sender application's name automatically.
+            It may be leaved null to send a message to same application.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.DestinationCommunicatorId">
+            <summary>
+            Destination communication channel's (Communicator's) Id.
+            This field is used by MDS to deliver message to a spesific communicator.
+            When more than one communicator of an application is connected same MDS server
+            at the same time, this field may be used to indicates a spesific communicator as receiver of message.
+            If it is set to 0 (zero), message may be delivered to any connected communicator.
+            If there is no communicator with DestinationCommunicatorId, message can not be delivered, so,
+            this field can only be used to send non-persistent messages (Syncronous messages).
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.MessageData">
+            <summary>
+            Essential application message data to be sent.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.IOutgoingMessage.TransmitRule">
+            <summary>
+            Transmit rule of message.
+            This is important because it determines persistence and transmit time of message.
+            Default: StoreAndForward.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSClient.OutgoingDataMessage._client">
+            <summary>
+            Reference to the MDSClient object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.OutgoingDataMessage.#ctor(MDS.Client.MDSClient)">
+            <summary>
+            Creates a new OutgoingDataMessage object.
+            </summary>
+            <param name="client">Reference to the MDSClient object</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.OutgoingDataMessage.Send">
+            <summary>
+            Sends the message to the MDS server.
+            If this method does not throw an exception,
+            message is correctly delivered to MDS server (persistent message)
+            or to the destination application (non persistent message).
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.OutgoingDataMessage.Send(System.Int32)">
+            <summary>
+            Sends the message to the MDS server.
+            If this method does not throw an exception,
+            message is correctly delivered to MDS server (persistent message)
+            or to the destination application (non persistent message).
+            </summary>
+            <param name="timeoutMilliseconds">Timeout to send message as milliseconds</param>
+        </member>
+        <member name="M:MDS.Client.MDSClient.OutgoingDataMessage.SendAndGetResponse">
+            <summary>
+            Sends the message and waits for an incoming message for that message.
+            MDS can be used for Request/Response type messaging with this method.
+            Default timeout value: 5 minutes.
+            </summary>
+            <returns>Response message</returns>
+        </member>
+        <member name="M:MDS.Client.MDSClient.OutgoingDataMessage.SendAndGetResponse(System.Int32)">
+            <summary>
+            Sends the message and waits for an incoming message for that message.
+            MDS can be used for Request/Response type messaging with this method.
+            </summary>
+            <param name="timeoutMilliseconds">Timeout to get response message as milliseconds</param>
+            <returns>Response message</returns>
+        </member>
+        <member name="T:MDS.Client.MDSClient.WaitingMessage">
+            <summary>
+            This class is used as item in _waitingMessages collection.
+            Key: Message ID to wait response.
+            Value: ManualResetEvent to wait thread until response received.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSClient.WaitingMessage.#ctor(System.Int32)">
+            <summary>
+            Creates a new WaitingMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.WaitingMessage.WaitingResponseType">
+            <summary>
+            What type of message is being waited.
+            For MDSOperationResultMessage, it is MDSMessageFactory.MessageTypeIdMDSOperationResultMessage.
+            For MDSDataTransferMessage, it is MDSMessageFactory.MessageTypeIdMDSDataTransferMessage. 
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.WaitingMessage.ResponseMessage">
+            <summary>
+            Response message received for sent message
+            This message may be MDSOperationResultMessage
+            or MDSDataTransferMessage according to WaitingResponseType.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.WaitingMessage.WaitEvent">
+            <summary>
+            ManualResetEvent to wait thread until response received.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSClient.WaitingMessage.State">
+            <summary>
+            State of the message.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesResponseMessage">
+            <summary>
+            This message is response to MDS Manager for GetApplicationWebServicesMessage.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesResponseMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesResponseMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesResponseMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for GetApplicationWebServicesMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesResponseMessage.Success">
+            <summary>
+            True, if operation is success and no error occured.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesResponseMessage.ResultText">
+            <summary>
+            Detailed information about operation result. Error text, if any error occured.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetApplicationWebServicesResponseMessage.WebServices">
+            <summary>
+            Web service communicators of application.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.CommunicationWays">
+            <summary>
+            Communication ways.
+            A client application may just send messages from communication channel or it can send and receive messages.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationWays.Send">
+            <summary>
+            Application can only send messages to MDS server.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicationWays.SendAndReceive">
+            <summary>
+            Application can send and receive messages to/from MDS server.
+            </summary>
+        </member>
+        <member name="T:MDS.Serialization.MDSDefaultDeserializer">
+            <summary>
+            This class is the default deserializer of MDS.
+            The deserializing object must be serialized by MDSDefaultSerializer.
+            Only needed deserializers designed for MDS.
+            </summary>
+        </member>
+        <member name="F:MDS.Serialization.MDSDefaultDeserializer._stream">
+            <summary>
+            The stream that is used to read serialized items for deserializing.
+            </summary>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new MDSDefaultDeserializer object.
+            </summary>
+            <param name="stream">The stream that is used to read serialized items for deserializing</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadByte">
+            <summary>
+            Deserializes and returns a serialized byte.
+            </summary>
+            <returns>Deserialized byte</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadByteArray">
+            <summary>
+            Reads a byte array from deserializing stream.
+            Created byte array may be null or empty.
+            </summary>
+            <returns>Deserialized string</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadInt32">
+            <summary>
+            Deserializes and returns a serialized integer.
+            </summary>
+            <returns>Deserialized integer</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadUInt32">
+            <summary>
+            Deserializes and returns a serialized unsigned integer.
+            </summary>
+            <returns>Deserialized unsigned integer</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadInt64">
+            <summary>
+            Deserializes and returns a serialized long.
+            </summary>
+            <returns>Deserialized long</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadBoolean">
+            <summary>
+            Deserializes and returns a serialized boolean.
+            </summary>
+            <returns>Deserialized boolean</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadDateTime">
+            <summary>
+            Deserializes and returns a serialized DateTime object.
+            </summary>
+            <returns>Deserialized DateTime object</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadCharUTF8">
+            <summary>
+            Deserializes and returns a serialized char using UTF8.
+            Note: A better way may be found.
+            </summary>
+            <returns>Deserialized char</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadStringUTF8">
+            <summary>
+            Deserializes and returns a serialized string using UTF8.
+            Created string may be null or empty.
+            </summary>
+            <returns>Deserialized string</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadObject``1(MDS.Serialization.CreateSerializableObjectHandler{``0})">
+            <summary>
+            Deserializes and returns an object that implements IMDSSerializable.
+            Object creation method is passed as parameter and used to create empty object.
+            Created object may be null.
+            </summary>
+            <typeparam name="T">A class that implements IMDSSerializable</typeparam>
+            <param name="createObjectHandler">A function that creates an empty T object</param>
+            <returns>Deserialized object</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadObjectArray``1(MDS.Serialization.CreateSerializableObjectHandler{``0})">
+            <summary>
+            Deserializes and returns an array of objects that implements IMDSSerializable.
+            Object creation method is passed as parameter and used to create empty object.
+            Created array may be null or empty.
+            </summary>
+            <typeparam name="T">A class that implements IMDSSerializable</typeparam>
+            <param name="createObjectHandler">A function that creates an empty T object</param>
+            <returns>Deserialized object</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ReadByteArray(System.Int32)">
+            <summary>
+            Reads a byte array with spesified length.
+            </summary>
+            <param name="length">Length of the byte array to read</param>
+            <returns>Read byte array</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultDeserializer.ThrowEndOfStreamException">
+            <summary>
+            Throws an exception for
+            </summary>
+        </member>
+        <member name="T:MDS.Management.MDSController">
+            <summary>
+            This class is used to connect to and communicate with MDS server from MDS Manager (Controller).
+            </summary>
+        </member>
+        <member name="F:MDS.Management.MDSController.Logger">
+            <summary>
+            Reference to logger.
+            </summary>
+        </member>
+        <member name="F:MDS.Management.MDSController._communicationChannel">
+            <summary>
+            Communication channel that is used to communicate with MDS server.
+            </summary>
+        </member>
+        <member name="F:MDS.Management.MDSController._incomingMessageQueue">
+            <summary>
+            This queue is used to queue MDSMessage objects received from MDS server and process them sequentially.
+            </summary>
+        </member>
+        <member name="F:MDS.Management.MDSController._waitingMessages">
+            <summary>
+            This collection is used to send message and get response in SendMessageAndGetResponse method.
+            SendMessageAndGetResponse method must wait until response received. It waits using this collection.
+            Key: Message ID to wait response.
+            Value: ManualResetEvent to wait thread until response received.
+            </summary>
+        </member>
+        <member name="F:MDS.Management.MDSController._reconnectTimer">
+            <summary>
+            This timer is used to reconnect to MDS server if it is disconnected.
+            </summary>
+        </member>
+        <member name="F:MDS.Management.MDSController._running">
+            <summary>
+            Used to Start/Stop MDSController, and indicates the state.
+            </summary>
+        </member>
+        <member name="M:MDS.Management.MDSController.#ctor(System.String,System.Int32)">
+            <summary>
+            Creates a new MDSClient object.
+            </summary>
+            <param name="ipAddress">Ip address of the MDS server</param>
+            <param name="port">Listening TCP Port of MDS server</param>
+        </member>
+        <member name="M:MDS.Management.MDSController.Connect">
+            <summary>
+            Connects to MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Management.MDSController.Disconnect">
+            <summary>
+            Disconnects from MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Management.MDSController.Dispose">
+            <summary>
+            Disposes MDSController object.
+            It also disconnects from server if it is connected.
+            </summary>
+        </member>
+        <member name="M:MDS.Management.MDSController.SendMessage(MDS.Communication.Messages.ControllerMessages.ControlMessage)">
+            <summary>
+            Sends a ControlMessage to MDS server.
+            </summary>
+            <param name="message">Message to send</param>
+        </member>
+        <member name="M:MDS.Management.MDSController.SendMessageAndGetResponse(MDS.Communication.Messages.ControllerMessages.ControlMessage)">
+            <summary>
+            Sends a ControlMessage to MDS server and gets it's response message.
+            </summary>
+            <param name="message">Message to send</param>
+            <returns>Response message from server</returns>
+        </member>
+        <member name="M:MDS.Management.MDSController.ConnectAndRegister">
+            <summary>
+            Connects and registers to MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Management.MDSController.SendMessageInternal(MDS.Communication.Messages.MDSMessage)">
+            <summary>
+            Sends a MDSMessage object to MDS server.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:MDS.Management.MDSController.CommunicationChannel_MessageReceived(MDS.Communication.Channels.ICommunicationChannel,MDS.Communication.Channels.MessageReceivedEventArgs)">
+            <summary>
+            This event handles incoming messages from communication channel.
+            </summary>
+            <param name="sender">Communication channel that received message</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="M:MDS.Management.MDSController.IncomingMessageQueue_ProcessItem(System.Object,MDS.Threading.ProcessQueueItemEventArgs{MDS.Communication.Messages.MDSMessage})">
+            <summary>
+            This event handles processing messages when a message is added to queue (_incomingMessageQueue).
+            </summary>
+            <param name="sender">Reference to message queue</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="M:MDS.Management.MDSController.ReconnectTimer_Tick(System.Object)">
+            <summary>
+            This method is called by _reconnectTimer_Tick to reconnect MDS server if disconnected.
+            </summary>
+            <param name="state">This argument is not used</param>
+        </member>
+        <member name="M:MDS.Management.MDSController.SendPingMessageIfNeeded">
+            <summary>
+            Sends a Ping message to MDS server if 60 seconds passed after last communication.
+            </summary>
+        </member>
+        <member name="M:MDS.Management.MDSController.CloseCommunicationChannel">
+            <summary>
+            Closes communication channel, thus disconnects from MDS server if it is connected.
+            </summary>
+        </member>
+        <member name="M:MDS.Management.MDSController.IsConnectedToServer">
+            <summary>
+            Checks if client application is connected to MDS server.
+            </summary>
+            <returns>True, if connected.</returns>
+        </member>
+        <member name="M:MDS.Management.MDSController.DeserializeControlMessage(MDS.Communication.Messages.MDSControllerMessage)">
+            <summary>
+            Deserializes a ControlMessage from a MDSControllerMessage.
+            </summary>
+            <param name="controllerMessage">MDSControllerMessage that includes ControlMessage</param>
+            <returns>Deserialized ControlMessage object.</returns>
+        </member>
+        <member name="E:MDS.Management.MDSController.ControlMessageReceived">
+            <summary>
+            This event is raised when a data transfer message received from MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Management.MDSController.ReConnectServerOnError">
+            <summary>
+            Gets sets Reconnecting option on any error case.
+            If this is true, controller application attempts to reconnec to MDS server until it is connected,
+            MDSController doesn't throw exceptions while connecting.  
+            Default value: True.
+            </summary>
+        </member>
+        <member name="P:MDS.Management.MDSController.LastIncomingMessageTime">
+            <summary>
+            Time of last message received from MDS server.
+            </summary>
+        </member>
+        <member name="P:MDS.Management.MDSController.LastOutgoingMessageTime">
+            <summary>
+            Time of last message sent to MDS server.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:MDS.Management.MDSController.WaitingMessage" -->
+        <member name="M:MDS.Management.MDSController.WaitingMessage.#ctor">
+            <summary>
+            Creates a new WaitingMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Management.MDSController.WaitingMessage.WaitEvent">
+            <summary>
+            ManualResetEvent to wait thread until response received.
+            </summary>
+        </member>
+        <member name="P:MDS.Management.MDSController.WaitingMessage.ResponseMessage">
+            <summary>
+            Response message received for sent message
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.GetServerGraphResponseMessage">
+            <summary>
+            This message is sent from MDS server to MDS manager as a response to GetServerGraphMessage message.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetServerGraphResponseMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.GetServerGraphResponseMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetServerGraphResponseMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for GetServerGraphMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetServerGraphResponseMessage.ServerGraph">
+            <summary>
+            The ServerGraphInfo object that stores all server and graph informations.
+            </summary>
+        </member>
+        <member name="T:MDS.Serialization.MDSSerializationHelper">
+            <summary>
+            This class is used to simplify serialization/deserialization with MDS serialization classes.
+            </summary>
+        </member>
+        <member name="M:MDS.Serialization.MDSSerializationHelper.SerializeToByteArray(MDS.Serialization.IMDSSerializable)">
+            <summary>
+            Serializes an object that implements IMDSSerializable and returns serialized byte array.
+            </summary>
+            <param name="serializableObject">Object to serialize</param>
+            <returns>Serialized object as byte array</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSSerializationHelper.SerializeToStream(System.IO.Stream,MDS.Serialization.IMDSSerializable)">
+            <summary>
+            Serializes an object that implements IMDSSerializable to a Stream.
+            </summary>
+            <param name="stream">Stream to write serialized object</param>
+            <param name="serializableObject">Object to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSSerializationHelper.DeserializeFromByteArray``1(MDS.Serialization.CreateSerializableObjectHandler{``0},System.Byte[])">
+            <summary>
+            Deserializes an object from a byte array.
+            </summary>
+            <typeparam name="T">Type of object. This type must implement IMDSSerializable interface</typeparam>
+            <param name="createObjectHandler">A function that creates an instance of that object (T)</param>
+            <param name="bytesOfObject">Byte array</param>
+            <returns>Deserialized object</returns>
+        </member>
+        <member name="M:MDS.Serialization.MDSSerializationHelper.DeserializeFromStream``1(MDS.Serialization.CreateSerializableObjectHandler{``0},System.IO.Stream)">
+            <summary>
+            Deserializes an object via reading from a stream.
+            </summary>
+            <typeparam name="T">Type of object. This type must implement IMDSSerializable interface</typeparam>
+            <param name="createObjectHandler">A function that creates an instance of that object (T)</param>
+            <param name="stream">Deserialized object</param>
+            <returns>Deserialized object</returns>
+        </member>
+        <member name="T:MDS.GeneralHelper">
+            <summary>
+            This class is used to perform common tasks that is used in both client and server side.
+            </summary>
+        </member>
+        <member name="M:MDS.GeneralHelper.ConnectToServerWithTimeout(System.Net.EndPoint,System.Int32)">
+            <summary>
+            This code is used to connect to a TCP socket with timeout option.
+            </summary>
+            <param name="endPoint">IP endpoint of remote server</param>
+            <param name="timeoutMs">Timeout to wait until connect</param>
+            <returns>Socket object connected to server</returns>
+        </member>
+        <member name="M:MDS.GeneralHelper.GetCurrentDirectory">
+            <summary>
+            Gets the current directory of executing assembly.
+            </summary>
+            <returns>Directory path</returns>
+        </member>
+        <member name="T:MDS.Exceptions.MDSRemoteException">
+            <summary>
+            Represents a MDS Remote Exception.
+            This exception is used to send an exception from an application to another application.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSRemoteException.#ctor">
+            <summary>
+            Contstructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSRemoteException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Contstructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSRemoteException.#ctor(System.String)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:MDS.Exceptions.MDSRemoteException.#ctor(System.String,System.Exception)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:MDS.Communication.Messages.MDSChangeCommunicationWayMessage">
+            <summary>
+            This message is used to change Communication Way of a communicator while it is connected to the MDS server.
+            Thus, for example, a receiver may change it's communication way to only Send and it does not get messages
+            anymore but can send messages.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSChangeCommunicationWayMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.MDSChangeCommunicationWayMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSChangeCommunicationWayMessage.MessageTypeId">
+            <summary>
+            MessageTypeId of message.
+            It is used to serialize/deserialize message.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSChangeCommunicationWayMessage.NewCommunicationWay">
+            <summary>
+            New communication way.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.RemoveApplicationResponseMessage">
+            <summary>
+            This message is sent by MDS Server to MDS Manager as a response to a RemoveApplicationMessage.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.RemoveApplicationResponseMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.RemoveApplicationResponseMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.RemoveApplicationResponseMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for RemoveApplicationResponseMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.RemoveApplicationResponseMessage.ApplicationName">
+            <summary>
+            Name of the new application.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.RemoveApplicationResponseMessage.Removed">
+            <summary>
+            True, if application is successfully removed.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.RemoveApplicationResponseMessage.ResultMessage">
+            <summary>
+            If Removed = True then "Success", else error message.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.GetServerGraphMessage">
+            <summary>
+            This message is sent from MDS manager to MDS server to get graph of MDS servers.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.GetServerGraphMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for GetServerGraphMessage.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Channels.TCPChannel">
+            <summary>
+            This class is used to connect to MDS server via TCP sockets.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Channels.TCPChannel.Logger">
+            <summary>
+            Reference to logger.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Channels.TCPChannel._ipAddress">
+            <summary>
+            IP address of MDS server
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Channels.TCPChannel._port">
+            <summary>
+            TCP port of MDS server
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Channels.TCPChannel._socket">
+            <summary>
+            The TCP socket to the remote application.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Channels.TCPChannel._networkStream">
+            <summary>
+            The main stream wraps socket to send/receive data.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Channels.TCPChannel._wireProtocol">
+            <summary>
+            This object is used to send/receive messages as byte array.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Channels.TCPChannel._thread">
+            <summary>
+            The thread that listens incoming data.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Channels.TCPChannel._sendLock">
+            <summary>
+            Used to send only one message in a time by locking.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Channels.TCPChannel.#ctor(System.String,System.Int32)">
+            <summary>
+            Creates a new TCPChannel object.
+            </summary>
+            <param name="ipAddress">IP address of MDS server</param>
+            <param name="port">TCP port of MDS server</param>
+        </member>
+        <member name="M:MDS.Communication.Channels.TCPChannel.Connect">
+            <summary>
+            Connects to MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Channels.TCPChannel.Disconnect">
+            <summary>
+            Disconnects from MDS server.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Channels.TCPChannel.SendMessage(MDS.Communication.Messages.MDSMessage)">
+            <summary>
+            Sends a MDSMessage to the MDS server
+            </summary>
+            <param name="message">Message to send</param>
+        </member>
+        <member name="M:MDS.Communication.Channels.TCPChannel.DoCommunicateAsThread">
+            <summary>
+            Entrance point of the thread.
+            This method run by thread to listen incoming data from communicator.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Channels.TCPChannel.SendMessageToSocket(MDS.Communication.Messages.MDSMessage)">
+            <summary>
+            Sends MDSMessage object to the socket.
+            </summary>
+            <param name="message">Message to be sent</param>
+        </member>
+        <member name="M:MDS.Communication.Channels.TCPChannel.ChangeState(MDS.Communication.CommunicationStates)">
+            <summary>
+            Changes the state of the client and raises StateChanged event.
+            </summary>
+            <param name="newState">New state</param>
+        </member>
+        <member name="M:MDS.Communication.Channels.TCPChannel.OnMessageReceived(MDS.Communication.Messages.MDSMessage)">
+            <summary>
+            When a MDSMessage received from MDS server, this method is called to raise MessageReceived event.
+            </summary>
+            <param name="message">Incoming message from server</param>
+        </member>
+        <member name="E:MDS.Communication.Channels.TCPChannel.StateChanged">
+            <summary>
+            This event is raised when the state of the client changes.
+            </summary>
+        </member>
+        <member name="E:MDS.Communication.Channels.TCPChannel.MessageReceived">
+            <summary>
+            This event is raised when a MDSMessage received.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Channels.TCPChannel.ComminicatorId">
+            <summary>
+            Unique identifier for this communicator in connected MDS server.
+            This field is not set by communication channel,
+            it is set by another classes (MDSClient) that are using
+            communication channel. 
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Channels.TCPChannel.State">
+            <summary>
+            Gets the connection state of communicator.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Channels.TCPChannel.CommunicationWay">
+            <summary>
+            Communication way for this channel.
+            This field is not set by communication channel,
+            it is set by another classes (MDSClient) that are using
+            communication channel. 
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceConsumer.#ctor(System.String)">
+            <summary>
+            Creates a new MDSServiceApplication object with default values to connect to MDS server.
+            </summary>
+            <param name="applicationName">Name of the application</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceConsumer.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new MDSServiceApplication object with default port to connect to MDS server.
+            </summary>
+            <param name="applicationName">Name of the application</param>
+            <param name="ipAddress">IP address of MDS server</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceConsumer.#ctor(System.String,System.String,System.Int32)">
+            <summary>
+            Creates a new MDSServiceApplication object.
+            </summary>
+            <param name="applicationName">Name of the application</param>
+            <param name="ipAddress">IP address of MDS server</param>
+            <param name="port">TCP port of MDS server</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceConsumer.Connect">
+            <summary>
+            This method connects to MDS server using underlying MDSClient object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceConsumer.Disconnect">
+            <summary>
+            This method disconnects from MDS server using underlying MDSClient object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceConsumer.Dispose">
+            <summary>
+            Disposes this object, disposes/closes underlying MDSClient object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceConsumer.Initialize">
+            <summary>
+            Initializes this object.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceConsumer.MdsClient">
+            <summary>
+            Underlying MDSClient object to send/receive MDS messages.
+            </summary>
+        </member>
+        <member name="T:MDS.Serialization.MDSDefaultSerializer">
+            <summary>
+            This class is the default serializer of MDS.
+            The serialized object must be deserialized by MDSDefaultDeserializer.
+            Only needed serializers designed for MDS.
+            </summary>
+        </member>
+        <member name="F:MDS.Serialization.MDSDefaultSerializer._stream">
+            <summary>
+            The stream that is used to write serialized items.
+            </summary>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new MDSDefaultSerializer object.
+            </summary>
+            <param name="stream">The stream that is used to write serialized items</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteByte(System.Byte)">
+            <summary>
+            Serializes a byte.
+            </summary>
+            <param name="b">byte to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteByteArray(System.Byte[])">
+            <summary>
+            Writes a byte array to serialization stream.
+            Byte array may be null or empty.
+            </summary>
+            <param name="bytes">byte array to write</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteInt32(System.Int32)">
+            <summary>
+            Serializes a integer.
+            </summary>
+            <param name="number">integer to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteUInt32(System.UInt32)">
+            <summary>
+            Serializes an unsigned integer.
+            </summary>
+            <param name="number">unsigned integer to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteInt64(System.Int64)">
+            <summary>
+            Serializes a long.
+            </summary>
+            <param name="number">long to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteBoolean(System.Boolean)">
+            <summary>
+            Serializes a boolean.
+            </summary>
+            <param name="b">boolean to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteDateTime(System.DateTime)">
+            <summary>
+            Serializes a DateTime object.
+            </summary>
+            <param name="dateTime">DateTime to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteCharUTF8(System.Char)">
+            <summary>
+            Serializes a char according to UTF8.
+            Char may be null or empty.
+            Note: A better way may be found.
+            </summary>
+            <param name="c">char to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteStringUTF8(System.String)">
+            <summary>
+            Serializes a string according to UTF8.
+            String may be null or empty.
+            </summary>
+            <param name="text">string to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteObject(MDS.Serialization.IMDSSerializable)">
+            <summary>
+            Serializes an object that implements IMDSSerializable interface.
+            Object may be null.
+            </summary>
+            <param name="serializableObject">object to serialize</param>
+        </member>
+        <member name="M:MDS.Serialization.MDSDefaultSerializer.WriteObjectArray(MDS.Serialization.IMDSSerializable[])">
+            <summary>
+            Serializes an array that all items implements IMDSSerializable interface.
+            Object array may be null or empty.
+            </summary>
+            <param name="serializableObjects">objects to serialize</param>
+        </member>
+        <member name="T:MDS.Communication.Messages.MDSPingMessage">
+            <summary>
+            This class is used to send Ping messages to check if remote application is connected and working.
+            MDS Servers send Ping messages to other MDS servers and gets response.
+            Client applications send Ping messages to MDS servers and gets response.
+            If there is no Ping message from a remote application for a while, connection is closed and
+            reconnected if needed.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSPingMessage.MessageTypeId">
+            <summary>
+            MessageTypeId of message.
+            It is used to serialize/deserialize message.
+            </summary>
+        </member>
+        <member name="T:MDS.GUI.MDSGuiHelper">
+            <summary>
+            This class is created to make easy common GUI tasks.
+            </summary>
+        </member>
+        <member name="M:MDS.GUI.MDSGuiHelper.ShowErrorMessage(System.String)">
+            <summary>
+            Show a message box that show an error.
+            </summary>
+            <param name="message">Message to show</param>
+        </member>
+        <member name="M:MDS.GUI.MDSGuiHelper.ShowErrorMessage(System.String,System.String)">
+            <summary>
+            Show a message box that show an error.
+            </summary>
+            <param name="message">Message to show</param>
+            <param name="caption">Caption of message box</param>
+        </member>
+        <member name="M:MDS.GUI.MDSGuiHelper.ShowWarningMessage(System.String)">
+            <summary>
+            Show a message box that show an warning.
+            </summary>
+            <param name="message">Message to show</param>
+        </member>
+        <member name="M:MDS.GUI.MDSGuiHelper.ShowWarningMessage(System.String,System.String)">
+            <summary>
+            Show a message box that show an warning.
+            </summary>
+            <param name="message">Message to show</param>
+            <param name="caption">Caption of message box</param>
+        </member>
+        <member name="M:MDS.GUI.MDSGuiHelper.ShowQuestionDialog(System.String,System.String)">
+            <summary>
+            Shows a messagebox to ask a question to user.
+            </summary>
+            <param name="message">Message to show</param>
+            <param name="caption">Caption of message box</param>
+            <returns>User's choice</returns>
+        </member>
+        <member name="M:MDS.GUI.MDSGuiHelper.ShowQuestionDialog(System.String,System.String,System.Windows.Forms.MessageBoxDefaultButton)">
+            <summary>
+            Shows a messagebox to ask a question to user.
+            </summary>
+            <param name="message">Message to show</param>
+            <param name="caption">Caption of message box</param>
+            <param name="defaultButton">Default selected button</param>
+            <returns>User's choice</returns>
+        </member>
+        <member name="M:MDS.GUI.MDSGuiHelper.ShowInfoDialog(System.String,System.String)">
+            <summary>
+            Shows a messagebox that shows an information.
+            </summary>
+            <param name="message">Message to show</param>
+            <param name="caption">Caption of message box</param>
+        </member>
+        <member name="T:MDS.Client.AppService.IMDSServer">
+            <summary>
+            This interface is used by MDSMessageProcessor/MDSClientApplicationBase to perform operations on MDSServer,
+            for example; creating messages to send.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.AppService.IMDSServer.CreateMessage">
+            <summary>
+            Creates an empty message to send.
+            </summary>
+            <returns>Created message</returns>
+        </member>
+        <member name="T:MDS.Communication.Messages.MessageTransmitRules">
+            <summary>
+            Message transmit rules.
+            All messages are persistent except 'DirectlySend'.
+            If a server doesn't stores message and transmiting it directly,
+            it transmits this message before than a stored (persistent) message.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Messages.MessageTransmitRules.DirectlySend">
+            <summary>
+            Not persistent message.
+            Message may be lost in an error.
+            Message is not stored on any server. 
+            Message is not guarantied to be delivered.
+            This rule may be used if both of source and destination applications must be run at the same time.
+            If no exception received while sending message,
+            that means message delivered to and acknowledged by destination application correctly.
+            This rule blocks sender application until destination application sends ACK for message.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Messages.MessageTransmitRules.StoreAndForward">
+            <summary>
+            Persistent Message.
+            Message can not be lost and it is being stored in all passing servers.
+            Message is guarantied to be delivered and it will be delivered as ordered (FIFO).
+            This is the slowest but most reliable rule.
+            This rule blocks sender application until source (first) MDS server stores message.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Messages.MessageTransmitRules.NonPersistent">
+            <summary>
+            Non-persistent message.
+            Message will be lost if MDS server which has message shuts down.
+            Message is not guarantied to be delivered.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.MDSControllerMessage">
+            <summary>
+            This class represents a message that is being transmitted between MDS server and a Controller (MDS Manager).
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSControllerMessage.MessageTypeId">
+            <summary>
+            MessageTypeId for MDSControllerMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSControllerMessage.ControllerMessageTypeId">
+            <summary>
+            MessageTypeId of ControllerMessage.
+            This field is used to deserialize MessageData.
+            All types defined in ControlMessageFactory class.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.MDSControllerMessage.MessageData">
+            <summary>
+            Essential message data.
+            This is a serialized object of a class in MDS.Communication.Messages.ControllerMessages namespace.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo">
+            <summary>
+            Stores all MDS server's and server graph's informations.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this object.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this object.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.ThisServerName">
+            <summary>
+            Reference to this server on graph (This server is also in Servers list).
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.Servers">
+            <summary>
+            All servers on graph.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.ServerOnGraph.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this object.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.ServerOnGraph.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this object.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.ServerOnGraph.Name">
+            <summary>
+            Name of this server.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.ServerOnGraph.IpAddress">
+            <summary>
+            IP address of this server.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.ServerOnGraph.Port">
+            <summary>
+            TCP Port number that is listened by this server.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.ServerOnGraph.Adjacents">
+            <summary>
+            List of adjacent servers of this server that are splitted by , or ;
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ServerGraphInfo.ServerOnGraph.Location">
+            <summary>
+            Location of server (Left (X) and Top (Y) properties in design area, seperated by comma (,)).
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Messages.ControllerMessages.ClientApplicationRefreshEventMessage">
+            <summary>
+            This message is sent to all connected MDS managers/controllers by MDS Server to inform about latest informations/state of a client application.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ClientApplicationRefreshEventMessage.Serialize(MDS.Serialization.IMDSSerializer)">
+            <summary>
+            Serializes this message.
+            </summary>
+            <param name="serializer">Serializer used to serialize objects</param>
+        </member>
+        <member name="M:MDS.Communication.Messages.ControllerMessages.ClientApplicationRefreshEventMessage.Deserialize(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Deserializes this message.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize objects</param>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ClientApplicationRefreshEventMessage.MessageTypeId">
+            <summary>
+            Gets MessageTypeId for GetApplicationListResponseMessage.
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ClientApplicationRefreshEventMessage.Name">
+            <summary>
+            Name of the client application
+            </summary>
+        </member>
+        <member name="P:MDS.Communication.Messages.ControllerMessages.ClientApplicationRefreshEventMessage.CommunicatorCount">
+            <summary>
+            Currently connected (online) communicator count.
+            </summary>
+        </member>
+        <member name="T:MDS.Serialization.CreateSerializableObjectHandler`1">
+            <summary>
+            This delegate is used with IMDSDeserializer to deserialize an object.
+            It is used by IMDSDeserializer to create an instance of deserializing object.
+            So, user of MDS serialization must supply a method that creates an empty T object.
+            This is needed for performance reasons. Because it is slower to create object by reflection.
+            </summary>
+            <typeparam name="T">Type of the object to be deserialized</typeparam>
+            <returns>An object from type T</returns>
+        </member>
+        <member name="T:MDS.Communication.CommunicatorTypes">
+            <summary>
+            Represents types of communicatiors.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicatorTypes.Undefined">
+            <summary>
+            An undefined remote application.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicatorTypes.MdsServer">
+            <summary>
+            A MDS server.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicatorTypes.Application">
+            <summary>
+            A client application.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.CommunicatorTypes.Controller">
+            <summary>
+            A controller application.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSServiceMethodParameterAttribute">
+            <summary>
+            This attribute is used to add information to a parameter or return value of a MDSServiceMethod.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceMethodParameterAttribute.#ctor(System.String)">
+            <summary>
+            Creates a new MDSServiceMethodParameterAttribute.
+            </summary>
+            <param name="description"></param>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceMethodParameterAttribute.Description">
+            <summary>
+            A brief description of parameter.
+            </summary>
+        </member>
+        <member name="T:MDS.Communication.Protocols.MDSDefaultWireProtocol">
+            <summary>
+            This class is the Default Protocol that is used by MDS to communicate with other applications.
+            A message frame is sent and received by MDSDefaultWireProtocol:
+            
+            - Protocol type: 4 bytes unsigned integer. 
+              Must be MDSDefaultProtocolType for MDSDefaultWireProtocol.
+            - Message type: 4 bytes integer.
+              Must be defined in MDSMessageFactory class.
+            - Serialized bytes of a MDSMessage object.
+            </summary>
+        </member>
+        <member name="F:MDS.Communication.Protocols.MDSDefaultWireProtocol.MDSDefaultProtocolType">
+            <summary>
+            Specific number that a message must start with.
+            </summary>
+        </member>
+        <member name="M:MDS.Communication.Protocols.MDSDefaultWireProtocol.WriteMessage(MDS.Serialization.IMDSSerializer,MDS.Communication.Messages.MDSMessage)">
+            <summary>
+            Serializes and writes a MDSMessage according to the protocol rules.
+            </summary>
+            <param name="serializer">Serializer to serialize message</param>
+            <param name="message">Message to be serialized</param>
+        </member>
+        <member name="M:MDS.Communication.Protocols.MDSDefaultWireProtocol.ReadMessage(MDS.Serialization.IMDSDeserializer)">
+            <summary>
+            Reads and constructs a MDSMessage according to the protocol rules.
+            </summary>
+            <param name="deserializer">Deserializer to read message</param>
+            <returns>MDSMessage object that is read</returns>
+        </member>
+        <member name="T:MDS.Exceptions.MDSDatabaseException">
+            <summary>
+            Represents a Database exception.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSDatabaseException.#ctor">
+            <summary>
+            Contstructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSDatabaseException.#ctor(System.String)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:MDS.Exceptions.MDSDatabaseException.#ctor(System.String,System.Exception)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="P:MDS.Exceptions.MDSDatabaseException.QueryText">
+            <summary>
+            Executed query text
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSServiceApplication">
+            <summary>
+            This class ensures to use a class that is derived from MDSService class, as a service on MDS.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSServices.MDSServiceApplication._mdsClient">
+            <summary>
+            Underlying MDSClient object to send/receive MDS messages.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSServices.MDSServiceApplication.Logger">
+            <summary>
+            Reference to logger.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSServices.MDSServiceApplication._serviceObjects">
+            <summary>
+            The service object that handles all method invokes.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.#ctor(System.String)">
+            <summary>
+            Creates a new MDSServiceApplication object with default values to connect to MDS server.
+            </summary>
+            <param name="applicationName">Name of the application</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new MDSServiceApplication object with default port to connect to MDS server.
+            </summary>
+            <param name="applicationName">Name of the application</param>
+            <param name="ipAddress">IP address of MDS server</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.#ctor(System.String,System.String,System.Int32)">
+            <summary>
+            Creates a new MDSServiceApplication object.
+            </summary>
+            <param name="applicationName">Name of the application</param>
+            <param name="ipAddress">IP address of MDS server</param>
+            <param name="port">TCP port of MDS server</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.Connect">
+            <summary>
+            This method connects to MDS server using underlying MDSClient object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.Disconnect">
+            <summary>
+            This method disconnects from MDS server using underlying MDSClient object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.AddService(MDS.Client.MDSServices.MDSService)">
+            <summary>
+            Adds a new MDSService for this service application.
+            </summary>
+            <param name="service">Service to add</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.RemoveService(MDS.Client.MDSServices.MDSService)">
+            <summary>
+            Removes a MDSService from this service application.
+            </summary>
+            <param name="service">Service to add</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.Dispose">
+            <summary>
+            Disposes this object, disposes/closes underlying MDSClient object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.Initialize">
+            <summary>
+            Initializes this object.
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.MdsClient_MessageReceived(System.Object,MDS.Client.MessageReceivedEventArgs)">
+            <summary>
+            This method handles all incoming messages from MDS server.
+            </summary>
+            <param name="sender">Creator object of method (MDSClient object)</param>
+            <param name="e">Message event arguments</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.SendException(MDS.Client.IIncomingMessage,MDS.Exceptions.MDSRemoteException)">
+            <summary>
+            Sends an Exception to the remote application that invoked a service method
+            </summary>
+            <param name="incomingMessage">Incoming invoke message from remote application</param>
+            <param name="exception">Exception to send</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.SendReturnValue(MDS.Client.IIncomingMessage,System.Object)">
+            <summary>
+            Sends return value to the remote application that invoked a service method.
+            </summary>
+            <param name="incomingMessage">Incoming invoke message from remote application</param>
+            <param name="returnValue">Return value to send</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.AcknowledgeMessage(MDS.Client.IIncomingMessage)">
+            <summary>
+            Acknowledges a message.
+            </summary>
+            <param name="message">Message to acknowledge</param>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSServiceApplication.ServiceObject">
+            <summary>
+            Represents a MDSService object.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSServices.MDSServiceApplication.ServiceObject._serviceClassName">
+            <summary>
+            Name of the Service object's class.
+            </summary>
+        </member>
+        <member name="F:MDS.Client.MDSServices.MDSServiceApplication.ServiceObject._methods">
+            <summary>
+            This collection stores a list of all methods of T, if that can be invoked from remote applications or not.
+            Key: Method name
+            Value: True, if it can be invoked from remote application. 
+            </summary>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.ServiceObject.#ctor(MDS.Client.MDSServices.MDSService,MDS.Client.MDSServices.MDSServiceAttribute)">
+            <summary>
+            Creates a new ServiceObject.
+            </summary>
+            <param name="service">The service object that is used to invoke methods on</param>
+            <param name="serviceAttribute">MDSService attribute of service object's class</param>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.ServiceObject.InvokeMethod(System.String,System.Object[])">
+            <summary>
+            Invokes a method of Service object.
+            </summary>
+            <param name="methodName">Name of the method to invoke</param>
+            <param name="parameters">Parameters of method</param>
+            <returns>Return value of method</returns>
+        </member>
+        <member name="M:MDS.Client.MDSServices.MDSServiceApplication.ServiceObject.RejectMessage(MDS.Client.IIncomingMessage,System.String)">
+            <summary>
+            Rejects a message.
+            </summary>
+            <param name="message">Message to reject</param>
+            <param name="reason">Reject reason</param>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceApplication.ServiceObject.Service">
+            <summary>
+            The service object that is used to invoke methods on.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceApplication.ServiceObject.ServiceAttribute">
+            <summary>
+            MDSService attribute of Service object's class.
+            </summary>
+        </member>
+        <member name="T:MDS.Exceptions.MDSSerializationException">
+            <summary>
+            Represents an Serialization / Deserialization exception.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSSerializationException.#ctor">
+            <summary>
+            Contstructor.
+            </summary>
+        </member>
+        <member name="M:MDS.Exceptions.MDSSerializationException.#ctor(System.String)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:MDS.Exceptions.MDSSerializationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSServiceMethodAttribute">
+            <summary>
+            Any MDSService class must use this attribute on it's remote methods.
+            If a method has not MDSServiceMethod attribute, it can not be invoked by remote applications.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSServiceMethodAttribute.Description">
+            <summary>
+            A brief description (and may be usage) of method.
+            </summary>
+        </member>
+        <member name="T:MDS.Client.MDSServices.MDSRemoteInvokeMessage">
+            <summary>
+            This message is sent to invoke a method of an application that implements MDSService API.
+            It is sent by MDSServiceProxyBase class and received by MDSServiceApplication class.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSRemoteInvokeMessage.ServiceClassName">
+            <summary>
+            Name of the target service class.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSRemoteInvokeMessage.MethodName">
+            <summary>
+            Method of remote application to invoke.
+            </summary>
+        </member>
+        <member name="P:MDS.Client.MDSServices.MDSRemoteInvokeMessage.Parameters">
+            <summary>
+            Parameters of method.
+            </summary>
+        </member>
+    </members>
+</doc>

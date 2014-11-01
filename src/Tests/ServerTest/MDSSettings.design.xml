@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MDSConfiguration>
+  <Servers>
+    <Server Name="this_server" Location="14,15" />
+  </Servers>
+</MDSConfiguration>

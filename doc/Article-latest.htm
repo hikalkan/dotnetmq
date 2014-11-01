@@ -1,0 +1,1090 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Article Source</title>
+<link rel="stylesheet" type="text/css" href="http://s.codeproject.com/App_Themes/Std/CSS/CodeProject.css?dt=2.3.110430.1" />
+<base href="http://www.codeproject.com/KB/library/" />
+</head>
+<body>
+<!--
+HTML for article "DotNetMQ: A Complete Message Queue System For .NET" by Halil ibrahim Kalkan
+URL: http://www.codeproject.com/KB/library/DotNetMQ.aspx
+Copyright 2011 by Halil ibrahim Kalkan
+All formatting, additions and alterations Copyright © CodeProject, 1999-2011
+-->
+
+
+
+<div>
+
+
+
+
+<!-- Start Article -->
+<span id="ArticleContent">
+<ul class="download">
+<li><a href="DotNetMQ/DotNetMQ_Sources.zip">Download source code - 1.14 MB</a></li>
+
+<li><a href="DotNetMQ/DotNetMQ_Binaries.zip">Download binaries - 204 KB</a></li>
+
+<li><a href="DotNetMQ/DotNetMQ_Samples.zip">Download samples - 123 KB</a></li>
+</ul>
+
+<h2>Article Outline</h2>
+
+<ul>
+<li><a href="#Introduction">Introduction</a></li>
+
+<li><a href="#WhatIsMessaging">What is <strong>Messaging</strong>?</a></li>
+
+<li><a href="#WhatIsDotNetMQ">What is <strong>DotNetMQ</strong>?</a></li>
+
+<li><a href="#WhyNewMessBroker">Why a New <strong>Message Broker</strong>?</a></li>
+
+<ul>
+<li><a href="#NeedForMessBroker">The <strong>Need</strong> for a Message Broker</a></li>
+
+<li><a href="#WhatAboutExisting">What About <strong>existing</strong> Message Brokers</a></li>
+</ul>
+
+<li><a href="#InstallDotNetMQ"><strong>Installing</strong> and Running DotNetMQ</a></li>
+
+<li><a href="#FirstApps"><strong>First Application</strong> Using DotNetMQ</a></li>
+
+<ul>
+<li><a href="#RegisterToDotNetMQ"><strong>Registering</strong> Applications to DotNetMQ</a></li>
+
+<li><a href="#DevelopApp1">Developing <strong>Application1</strong></a></li>
+
+<li><a href="#DevelopApp2">Developing <strong>Application2</strong></a></li>
+
+<li><a href="#TransmitRule"><strong>Transmit Rule</strong> Property of Message</a></li>
+
+<li><a href="#CommWay"><strong>CommunicationWay</strong> Property of MDSClient</a></li>
+
+<li><a href="#ReconnectTo"><strong>ReConnectServerOnError</strong> Property of MDSClient</a></li>
+<li><a href="#ReconnectTo"><strong>AutoAcknowledgeMessages</strong> Property of MDSClient</a></li>
+</ul>
+
+<li><a href="#Configuring"><strong>Configuring</strong> DotNetMQ</a></li>
+
+<ul>
+<li><a href="#ConfdServers"><strong>Servers</strong></a></li>
+
+<li><a href="#ConfApps"><strong>Applications</strong></a></li>
+
+<li><a href="#CongRouting"><strong>Routing</strong> /<strong> Load Balancing</strong></a></li>
+
+<li><a href="#ConfOther"><strong>Other Settings</strong></a></li>
+</ul>
+
+<li><a href="#MessagingNetwork">Messaging Over <strong>Network</strong></a></li>
+
+<ul>
+<li><a href="#ASimpleApp">A Simple Application</a></li>
+
+<li><a href="#DistSmsProcess">A Real Life Case: <strong>Distributed SMS Processor</strong></a></li>
+</ul>
+
+<li><a href="#ReqRepMess"><strong>Request/Reply</strong> Style Messaging</a></li>
+
+<li><a href="#SOA"><strong>Service-Oriented</strong> Architecture on DotNetMQ</a></li>
+
+<ul>
+<li><a href="#SampleMailSms">Sample Application: <strong>SMS/Mail Sender</strong></a> 
+<ul>
+<li><a href="#MailService">Service</a></li>
+
+<li><a href="#MailClent">Client</a></li>
+</ul>
+</li>
+
+<li><a href="#WebServices"><strong>Web Services</strong> Support</a></li>
+</ul>
+
+<li><a href="#PerformanceDotNetMq"><strong>Performance</strong> of DotNetMQ</a></li>
+
+<li><a href="#ArticleHistory"><strong>History</strong></a></li>
+
+<li><a href="#ArticleRefereces"><strong>References</strong></a></li>
+</ul>
+
+<h2><a name="Introduction"></a>Introduction</h2>
+
+<p>In this article, I will introduce a new and independent <strong>Open Source Message Queue system</strong> that is entirely built in C# and .NET framework 3.5. <strong>DotNetMQ</strong> is a message broker that has several features including guaranteed delivering, routing, load balancing, server graphs... so on. I will start by explaining messaging concepts and the need for message brokers. Then I will examine what DotNetMQ is and how to use it.</p>
+
+<h2><a name="WhatIsMessaging"></a>What Is Messaging?</h2>
+
+<p><strong>Messaging</strong> is a way of <strong><em>asynchronous</em></strong> communication of applications running on same or different machines with reliable delivery. Programs communicate by sending packets of data called messages to each other [<a href="#ArticleRef1">1</a>].</p>
+
+<p>A message may be a string, a byte array, an object... etc. Typically, a <strong>sender (producer)</strong> program creates a message and pushes it to a message queue and a <strong>receiver (consumer)</strong> program gets the message from the queue and processes it. The sender and receiver programs don’t have to be running at the same time, since messaging is an asynchronous process. This is called <strong>loosely coupled</strong> communication.</p>
+
+<p>On the other hand, a Web Service method call (Remote Method Invocation) is a type of <strong>tightly coupled</strong> and<strong> synchronous</strong> communication (both applications have to be running and available during the whole communication; if the Web Service is offline or an error occurs during the method call, the client application gets an exception).</p>
+
+<p><img width="600" height="66" alt="Message Queue" src="DotNetMQ/01_MessageQueue.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 1: Simplest messaging of two applications.</div>
+
+<p>In the figure above, two applications communicate over a message queue in a loosely coupled manner. If the receiver consumes messages slower than the sender produces it, the message count on the queue will increase. Also, the receiver may be offline while the sender is sending messages. In this situation, the receiver gets the messages from the queue when it becomes online (when it starts and joins the queue).</p>
+
+<p><strong>Message Queues</strong> are typically provided by Message Brokers. A <strong>Message Broker</strong> is a standalone application (service) that other applications connect to and send/receive messages. A Message Broker is responsible to store messages until a receiver receives them. A Message Broker can route messages across machines to deliver a message to the destination application and can try delivering the message until the receiver correctly handles it. A Message Broker is sometimes called a <strong>Message Oriented Middleware</strong> (<strong>MOM</strong>) or simply <strong>Message Queue</strong> (<strong>MQ</strong>).</p>
+
+<h2><a name="WhatIsDotNetMQ"></a>What is DotNetMQ?</h2>
+
+<p><strong>DotNetMQ</strong> is an open source Message Broker that has several features:</p>
+
+<ul>
+<li><strong>Persistent</strong> or <strong>non-persistent</strong> messaging.</li>
+
+<li><strong>Guaranteed delivery</strong> of persistent messages even in a system crash.</li>
+
+<li><strong>Automatic</strong> and<strong> manual</strong> <strong>routing</strong> of messages in a custom <strong>machine graph</strong>.</li>
+
+<li>Supports <strong>multiple databases</strong> (<strong>MS SQL Server, MySQL</strong>, <strong>SQLite</strong>, and memory-based storage for now).</li>
+
+<li>Supports <strong>don’t store, direct send</strong> style messaging.</li>
+
+<li>Supports <strong>Request/Reply</strong> style messaging.</li>
+
+<li><strong>Easy to use</strong> client library to communicate with the DotNetMQ Message Broker.</li>
+
+<li>Built-in framework to easily construct <strong>RMI services</strong> upon message queues.</li>
+
+<li>Supports <strong>delivering messages to ASP.NET Web Services</strong>.</li>
+
+<li>GUI-based <strong>management</strong> and <strong>monitoring</strong> tool.</li>
+
+<li>Easy to install, manage, and use.</li>
+
+<li>Written entirely in <strong>C#</strong> (using .NET Framework 3.5).</li>
+</ul>
+
+<p>I preferred to name DotNetMQ as MDS (Message Delivery System) when first creating it. Because it is designed not just to be a message queue, but also as a system that delivers messages directly to applications and an environment that provides a framework to build application services. I called it <strong>DotNetMQ</strong> since it is entirely developed using .NET and the DotNetMQ name is more memorable. So, it’s original name (and internal project name) is MDS and the applications have many classes with the prefix <strong>MDS</strong>.</p>
+
+<h2><a name="WhyNewMessBroker"></a>Why a New Message Broker?</h2>
+
+<h3><a name="NeedForMessBroker"></a>The Need for a Message Broker</h3>
+
+<p>First, I will demonstrate a simple situation where a message broker is needed.</p>
+
+<p>In my experiences in business life, I've observed really bad and uncommon asynchronous enterprise application integration solutions. Usually there is an application that runs on a server and performs some tasks and produces data, and then sends the result data to another application on another server. The second application performs other tasks on the data or evaluates the result (the servers are on the same network or connected over the internet). Also, the message data must be persistent. Even if the remote application is not working or the network is not available, the <strong>message must be delivered on the first chance</strong>.</p>
+
+<p>Let’s look at the design in the figure below.</p>
+
+<p><img width="600" height="256" alt="Bad Messaging" src="DotNetMQ/02_BadMessaging.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 2: A bad solution to integrate applications.</div>
+
+<p><strong>Application - 1</strong> and <strong>Application - 2</strong> are executable applications (or Windows services) and <strong>Sender Service</strong> is a Windows service. Application - 1 performs some task, produces data, and calls a <strong>Remote Web Service</strong> method on <strong>Server - B</strong> to transmit data. This Web Service inserts data into a <strong>database table</strong>. Application - 2 periodically checks the table for new incoming data rows and processes them (and deletes them from the table or marks them as processed to not process the same data again).</p>
+
+<p>If an<strong> error</strong> occurs during the Web Service call or while processing data in the Web Service, data must not be lost and must be sent later. However, Application - 1 has other tasks to do, so it can not try to send data again and again. It simply inserts data into a database table. Another Windows service (or a thread in Application - 1<em>,</em> if the application always runs) checks this table periodically and tries to send data to the Web Service until data is successfully sent.</p>
+
+<p>This scenario is really reliable (messages are guaranteed to be delivered) but is not an efficient way of communicating between two applications. This solution has some very critical problems:</p>
+
+<ul>
+<li>It takes a <strong>long time to develop</strong> (to code).</li>
+
+<li>Individual coding for all <strong>message types</strong> (or remote method calls). For a new Web Service method call, you must change all the services, applications, and database tables.</li>
+
+<li>Almost same software and structures must be developed (or copied and modified) for every similar service.</li>
+
+<li>Testing and maintenance of <strong>too many services/applications/databases</strong> after coding.</li>
+
+<li>Some applications and services periodically check the database even if there is no new message (if the database is not well indexed and optimized, this may consume serious system resources).</li>
+</ul>
+
+<p>Message Brokers do all this job and takes all the responsibility to deliver messages to the remote application in the most efficient way. The same application integration using DotNetMQ is shown in the figure below.</p>
+
+<p><img width="544" height="185" alt="Simple DotNetMQ Messaging" src="DotNetMQ/03_SimpleDotNetMQ.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 3: Simple messaging by using DotNetMQ.</div>
+
+<p>DotNetMQ is a standalone Windows service that runs on both <strong>Server - A</strong> and <strong>Server - B</strong>. Thus, you just need to write code to communicate with DotNetMQ. Using the DotNetMQ Client Library, it is very easy and fast to connect and send/receive messages to/from the DotNetMQ service. <strong>Application - 1</strong> prepares the message, sets the destination, and passes the message to the DotNetMQ Broker. DotNetMQ brokers will deliver the message to <strong>Application - 2</strong> in the most efficient and fastest way.</p>
+
+<h3><a name="WhatAboutExisting"></a>What About Existing Message Brokers</h3>
+
+<p>It is clear to see that there is a need for Message Brokers to integrate applications. I searched the web, and read books to find a free (and Open Source, if available) Message Broker that is easy to use with .NET. Let’s talk about what I found:</p>
+
+<ul>
+<li><strong>Apache ActiveMQ</strong> (<a href="http://activemq.apache.org/">http://activemq.apache.org</a>): It is Open Source and implements <strong>JMS</strong> (Java Message Service is a standard API for messaging in the Java world). It has also a .NET client library. I read a complete book “ActiveMQ in Action” to learn more and I developed some simple applications. Even though I read the book, I did not see an easy and reliable way to construct an ActiveMQ <strong>server graph</strong> that worked together and routed messages. I also did not see a way to set the destination server for a message. It routes messages automatically but I can not control the routing efficiently. I understood that it is commonly used with <strong>Apache Camel</strong> (<a href="http://camel.apache.org/">http://camel.apache.org</a>) to achieve common application integration patterns. Apache Camel is also another world to discover, and even worse, it is just for Java. Finally, I think that it is not simple enough to use and especially to configure, monitor, and manage it. So I gave up working on ActiveMQ.</li>
+
+<li><strong>MSMQ</strong> (<a href="http://msdn.microsoft.com/en-us/library/ms711472(VS.85).aspx">http://msdn.microsoft.com/en-us/library/ms711472(VS.85).aspx</a>): This is a solution from <strong>Microsoft</strong> and it is the most suitable framework to use with .NET applications. It is easy to use and learn, and it has tools to monitor queues and messages. It is especially very suitable for asynchronous communication of applications that are running on the same machine or can directly connect to the same machine. But I could not find a built-in solution to construct a graph of MSMQ servers that route messages. Since routing is my first start point, I eliminated this Broker.</li>
+
+<li><strong>RabbitMQ</strong> (<a href="http://www.rabbitmq.com/">http://www.rabbitmq.com</a>): It is developed using the <strong>Erlang</strong> programming platform (that is developed by <strong>Ericsson</strong>). You need to install Erlang first. I spent a lot of time to install, configure, and write a sample application. It has a .NET client but I got many errors when trying to develop and run a simple application. It was very hard to install and to make two rabbitMQ Brokers work together on two different servers. After a few days, I gave up because I thought it must not be that hard to learn and to start developing applications.</li>
+
+<li><strong>OpenAMQ</strong> (<a href="http://www.openamq.org/">http://www.openamq.org</a>), <strong>ZeroMQ</strong> (<a href="http://www.zeromq.org/">http://www.zeromq.org</a>): <strong>I examined these brokers overall</strong> but I found that I can not easily do what I want to using .NET.</li>
+
+<li><strong>Others</strong>: I also found a few other projects but they have important features missing like routing, persistent messaging, request/reply messaging... etc.</li>
+</ul>
+
+<p>You see that there is no Message Broker that is developed entirely in .NET in the list above.</p>
+
+<p>From a user perspective, I just want to pass “<strong>message data, destination server, and application name</strong>” to my <strong>local</strong> Broker. I am not interested in the rest. It will route a message over the network as many times it requires and delivers the message to my destination application on the destination server. My messaging system must provide this simplicity for me. This was my first start point and I evaluated Message Brokers according to that point. The figure below shows what I want.</p>
+
+<p><img width="600" height="381" alt="Complete Messaging" src="DotNetMQ/04_CompleteMessaging.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 4: Automatic routing messages in a Message Broker servers graph.</div>
+
+<p><strong><em>Application - 1</em></strong> passes a message to <strong>Message Broker</strong> in the local server (<strong><em>Server - A</em></strong>):</p>
+
+<ul>
+<li>Destination server: <strong>Server - D</strong></li>
+
+<li>Destination application: <strong>Application - 2</strong></li>
+
+<li>Message Data: <strong><em>application specific data</em></strong></li>
+</ul>
+
+<p><strong>Server - A</strong> has no direct connection to <strong>Server - D</strong>. So the Message Brokers forward the message over the servers (the message is transmitted through Server - A, Server - B, Server - C, and Server - D sequentially) and the message finally reaches the Message Broker in Server - D to deliver the message to <strong>Application - 2</strong>. Note that there is another instance of Application - 2 running on Server - E, but it does not receive this message, since the destination server of the message is <em>Server - D</em>.</p>
+
+<p>DotNetMQ provides this functionality and simplicity. It finds the <strong>best (shortest) path</strong> from the source server to the destination server on the graph and forwards the message.</p>
+
+<p>After this comprehensive introduction, let’s see how to use DotNetMQ in practice.</p>
+
+<h2><a name="InstallDotNetMQ"></a>Installing and Running DotNetMQ</h2>
+
+<p>There is no auto install for now, but it is very easy to install DotNetMQ. <strong>download</strong> and <strong>unzip</strong> the <strong>binaries </strong>download file from the top of the article. Just copy everything from there to <em>C:\Program Files\DotNetMQ\</em> and run <em><strong>INSTALL_x86.bat</strong> (or <strong>INSTALL_x64.bat</strong> if you are using  64bit operating system)</em>.</p>
+<p>You can check Windows services to see if DotNetMQ is installed and working.</p>
+
+<h2><a name="FirstApps"></a>First Application Using DotNetMQ</h2>
+
+<p>Let’s see DotNetMQ in action. To make the first application most simple, I assume that there are two console applications running on the same machine (in fact (as we will see later in this document) there is no significant difference if the applications are in different machines; the only difference is properly setting the name of the destination server in the message).</p>
+
+<ul>
+<li><strong>Application1</strong>: Gets a string message from the user and sends it to Application2.</li>
+
+<li><strong>Application2</strong>: Writes incoming messages to the console screen.</li>
+</ul>
+
+<h3><a name="RegisterToDotNetMQ"></a>Registering Applications to DotNetMQ</h3>
+
+<p>We need to register applications once to use them with DotNetMQ. It is a very simple process. Run <strong>DotNetMQ Manager</strong> (<em>MDSManager.exe</em> in the DotNetMQ program folder (default: <em>C:\Program Files\DotNetMQ\</em>)), and open <strong>Application List</strong> from the <strong>Applications</strong> menu. Click the <strong>Add New Application</strong> button and enter a name for the application.</p>
+
+<p>Add the <strong>Application1</strong> and <strong>Application2</strong> applications to DotNetMQ as described above. Finally, your application list must be like below.</p>
+
+<p><img width="563" height="389" alt="DotNetMQManager" src="DotNetMQ/05_AddApps.jpg" complete="true" /></p>
+
+<div class="Caption">Figure - 5: Application list screen of the DotNetMQ Manager tool.</div>
+
+<p>This screen shows the registered applications to DotNetMQ. The Connected Clients column shows the count of instances of the application that are currently connected to DotNetMQ. It is <strong>not needed to restart</strong> DotNetMQ because of the changes in this screen.</p>
+
+<h3><a name="DevelopApp1"></a>Developing Application1</h3>
+
+<p> Create a new console application with name <strong>Application1</strong> in Visual Studio and add a reference to <strong>MDSCommonLib.dll</strong> that provides necessary classes to connect to DotNetMQ. Then write the following code in the Program.cs file:</p>
+
+<pre lang="cs">using System;
+using System.Text;
+using MDS.Client;
+
+namespace Application1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Create MDSClient object to connect to DotNetMQ
+            //Name of this application: Application1
+            var mdsClient = new MDSClient(&quot;Application1&quot;);
+
+            //Connect to DotNetMQ server
+            mdsClient.Connect();
+
+            Console.WriteLine(&quot;Write a text and press enter to send &quot; + 
+               &quot;to Application2. Write 'exit' to stop application.&quot;);
+
+            while (true)
+            {
+                //Get a message from user
+                var messageText = Console.ReadLine();
+                if (string.IsNullOrEmpty(messageText) || messageText == &quot;exit&quot;)
+                {
+                    break;
+                }
+
+                //Create a DotNetMQ Message to send to Application2
+                var message = mdsClient.CreateMessage();
+                //Set destination application name
+                message.DestinationApplicationName = &quot;Application2&quot;;
+                //Set message data
+                message.MessageData = Encoding.UTF8.GetBytes(messageText);
+
+                //Send message
+                message.Send();
+            }
+
+            //Disconnect from DotNetMQ server
+            mdsClient.Disconnect();
+        }
+    }
+}</pre>
+
+<p>When creating the <code>MDSClient</code> object, we pass the application name which connects to DotNetMQ. With this constructor, we connect to DotNetMQ on the local server (127.0.0.1) with the default port number (10905). Overloaded constructors can be used to connect to another server and port.</p>
+
+<p>The <code>CreateMessage</code> method of <code>MDSClient</code> returns an object of type <code>IOutgoingMessage</code>. The <code>MessageData</code> property is the actual data to send to the destination application. It is a byte array. We are converting the user input text to a byte array using UTF8 encoding. The<code>DestinationApplicationName</code> and <code>DestinationServerName</code> properties are used to set the destination address of message. If we don’t specify the destination server, it is assumed as the local server. Finally, we send the message.</p>
+
+<h3><a name="DevelopApp2"></a>Developing Application2</h3>
+
+<p>Create a new console application with name <strong>Application2</strong> in Visual Studio, add a reference to <strong>MDSCommonLib.dll</strong> and write the following code:</p>
+
+<pre lang="cs">using System;
+using System.Text;
+using MDS.Client;
+
+namespace Application2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Create MDSClient object to connect to DotNetMQ
+            //Name of this application: Application2
+            var mdsClient = new MDSClient(&quot;Application2&quot;);
+
+            //Register to MessageReceived event to get messages.
+            mdsClient.MessageReceived += MDSClient_MessageReceived;
+
+            //Connect to DotNetMQ server
+            mdsClient.Connect();
+
+            //Wait user to press enter to terminate application
+            Console.WriteLine(&quot;Press enter to exit...&quot;);
+            Console.ReadLine();
+
+            //Disconnect from DotNetMQ server
+            mdsClient.Disconnect();
+        }
+
+        /// &lt;summary&gt;
+        /// This method handles received messages from other applications via DotNetMQ.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;sender&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;e&quot;&gt;Message parameters&lt;/param&gt;
+        static void MDSClient_MessageReceived(object sender, MessageReceivedEventArgs e)
+        {
+            //Get message
+            var messageText = Encoding.UTF8.GetString(e.Message.MessageData);
+
+            //Process message
+            Console.WriteLine();
+            Console.WriteLine(&quot;Text message received : &quot; + messageText);
+            Console.WriteLine(&quot;Source application    : &quot; + e.Message.SourceApplicationName);
+
+            //Acknowledge that message is properly handled
+            //and processed. So, it will be deleted from queue.
+            e.Message.Acknowledge();
+        }
+    }
+}</pre>
+
+<p>Creating the <code>MDSClient</code> object is similar to that in Application1 but the application name is Application2. To receive messages for an application, it needs to register to the <code>MessageReceived</code> event of <code>MDSClient</code>. Then we connect to DotNetMQ and stay connected until the user presses Enter.</p>
+
+<p>When a message is sent to Application2, the <code>MDSClient_MessageReceived</code> method handles the event. We get the message from the <code>Message</code> property of <code>MessageReceivedEventArgs</code>. The type of message is <code>IIncomingMessage</code>. The <code>MessageData</code> property of <code>IIncomingMessage</code> contains the actual message data that is sent by Application1. Since it is a byte array, we are converting it to string using UTF8 encoding. We write the message text that is sent by Application1 to the console screen.</p>
+
+<p><img width="600" height="226" alt="First Apps" src="DotNetMQ/06_FirstApps.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 6: Application1 sends two messages to Application2 over DotNetMQ.</div>
+
+<p>After processing an incoming message, it is needed to <strong>Acknowledge</strong> the message. That means the message is properly received and correctly processed. DotNetMQ then removes the message from message queue. We can also reject a message using the <code>Reject</code> method (if we can not process the message on an error case). In this situation, the message turns back to the message queue and will be sent later to the destination application (or it will be sent to another instance of Application2 on the same server if exists). This is a powerful mechanism of the DotNetMQ system. Thus, it is guarantied that the message can not be lost and it is absolutely processed. If you do not acknowledge or reject a message, it is assumed as rejected. So, even if your application crashes, your message is sent back to your application later.</p>
+<p>If you run <strong>multiple instance</strong> of the Application2, which one will receive messages? In this case, DotNetMQ delivers messages to applications sequentially. So, you can create multi sender/receiver systems. A message is received by only one instance of applications (applications receives different messages). DotNetMQ provides all functionallity and synchronization.</p>
+
+<h3><a name="TransmitRule"></a>Transmit Rule Property of Message</h3>
+
+<p>Before sending a message, you can set the <strong>Transmit Rule</strong> of a message like this:</p>
+
+<pre lang="cs">message.TransmitRule = MessageTransmitRules.NonPersistent;</pre>
+
+<p>There are three types of transmit rules:</p>
+
+<ul>
+<li><code>StoreAndForward</code>: This is the default transmit rule. Messages are persistent, can not be lost, and are guaranteed to be delivered. If the <code>Send</code> method does not throw an Exception, then the message is correctly received by DotNetMQ and stored in the database. It is stored in the database until the destination application receives and acknowledges it.</li>
+
+<li><code>NonPersistent</code><strong>:</strong> Messages are not stored in database. It is the <strong>fastest</strong> way of sending messages. A message is lost only if the DotNetMQ server stops.</li>
+
+<li><code>DirectlySend</code><strong>:</strong> This is an exclusive feature of DotNetMQ. This type of messages are directly sent to the application. The sender application is blocked until the receiver acknowledges a message. So, if the sender does not get any exception while calling the <code>Send</code> method, it means the message is properly received and acknowledged by the receiver application. If an error occurs while transmitting a message, the receiver is offline, or the receiver rejects the message, the sender gets an exception on the <code>Send</code> method. This rule correctly works even if applications are on different servers (even if there are many servers between applications).</li>
+</ul>
+
+<p>Since the default transmit rule is <code>StoreAndForward</code>, let’s try that:</p>
+
+<ul>
+<li>Run <strong>Application1</strong> (while Application2 is not running), write some messages, and close application.</li>
+
+<li>Run <strong>Application2</strong>, you will see that your messages are received by Application2 and are not lost.</li>
+</ul>
+
+<p>Even if you stop the DotNetMQ service from Windows services after sending messages from Application1, your messages won’t be lost. That is called <strong>persistence</strong>.</p>
+
+<h3><a name="CommWay"></a>CommunicationWay Property of MDSClient</h3>
+
+<p>By default, an application can send and receive messages using MDSClient (<code>CommunicationWays.SendAndReceive</code>). If an application doesn’t want to receive messages, it must set the <code>CommunicationWay</code> property to <code>CommunicationWays.Send</code>. This property can be changed before connection or during communication with DotNetMQ.</p>
+
+<h3><a name="ReconnectTo"></a>ReConnectServerOnError Property of MDSClient</h3>
+
+<p>By default, MDSClient <strong>automatically reconnects</strong> to DotNetMQ if it disconnects. So, even if you restart DotNetMQ, it is not needed to restart your applications that are connected to DotNetMQ. You can set the <code>ReConnectServerOnError</code> property to <code>false</code> to disable auto-reconnect.</p>
+<h3><a name="AutoAck"></a>AutoAcknowledgeMessages Property of MDSClient</h3>
+<p>By default, You must <strong>explicitly acknowledge</strong> messages in <strong>MessageReceived</strong> event. Otherwise, it is assumed as <strong>Rejected</strong>. If you want oppisite of this approach, you must set <strong>AutoAcknowledgeMessages</strong> property as <strong>true</strong>. In this case, if your MessageReceived <strong>event handler</strong> does not throw an <strong>exception</strong> or you do not acknowledge/reject  the message explicitly, it is automatically <strong>acknowledged</strong> (If an exception is thrown, the message is rejected).</p>
+
+<h2><a name="Configuring"></a>Configuring DotNetMQ</h2>
+
+<p>You can configure DotNetMQ in two ways: Using <strong>XML settings files</strong> or <strong>DotNetMQ Manager</strong> (Windows Forms application). Here, I will show two approaches. Some of the configurations require you to <strong>restart</strong> DotNetMQ while others do not.</p>
+
+<h3><a name="ConfdServers"></a>Servers</h3>
+
+<p>You may run DotNetMQ on only <strong>one server</strong>. In this situation, there is no need to configure anything for the servers. But if you want to run DotNetMQ on <strong>more than one server</strong> and make them communicate with others, you must define your <strong>server graph</strong>.</p>
+
+<p>A server graph consists of two or more <strong>nodes</strong>. Each node is a server that has an <strong>IP address</strong> and <strong>TCP port</strong> (that is used by DotNetMQ). You can configure/<strong>design</strong> a server graph by using the DotNetMQ Manager.</p>
+
+<p><img width="524" height="315" alt="Server Graph" src="DotNetMQ/07_ServerGraph1.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 8: DotNetMQ Server Graph managing.</div>
+
+<p>In the figure above, you see a server graph that consists of five nodes. The red node represents this server (this server means the server that you are connected with DotNetMQ Manager). A line means that there is a connection (and they can send/receive messages) between two nodes (they are called adjacent nodes). The name of the server/node in a graph is important and is used when sending messages to the server.</p>
+
+<p>You can double-click a server in the graph to change its properties. To connect two servers, hold Ctrl, click the first one then the second one (to disconnect, do the same thing again). You can set a server as this server by right clicking and selecting <strong>Set as this server</strong>. You can also delete a server from the graph or add a new server by using the right click menu. Lastly, you can add move servers by dragging.</p>
+
+<p>After designing your server graph, you must click the <strong>Save &amp; Update Graph</strong> button to save the changes. The changes are saved to the <em>MDSSettings.xml</em> file in your DotNetMQ installation folder. You <strong>must restart</strong> DotNetMQ to apply the changes.</p>
+
+<p>For the server graph above, the corresponding <em>MDSSettings.xml</em> settings are shown below:</p>
+
+<pre lang="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;MDSConfiguration&gt;
+  &lt;Settings&gt;
+    ...
+  &lt;/Settings&gt;
+  <strong>&lt;Servers&gt;
+    &lt;Server Name=&quot;halil_pc&quot; IpAddress=&quot;192.168.10.105&quot; 
+       Port=&quot;10099&quot; Adjacents=&quot;emre_pc&quot; /&gt;
+    &lt;Server Name=&quot;emre_pc&quot; IpAddress=&quot;192.168.10.244&quot; Port=&quot;10099&quot; 
+       Adjacents=&quot;halil_pc,out_server,webserver1,webserver2&quot; /&gt;
+    &lt;Server Name=&quot;out_server&quot; IpAddress=&quot;85.19.100.185&quot; 
+       Port=&quot;10099&quot; Adjacents=&quot;emre_pc&quot; /&gt;
+    &lt;Server Name=&quot;webserver1&quot; IpAddress=&quot;192.168.10.263&quot; 
+       Port=&quot;10099&quot; Adjacents=&quot;emre_pc,webserver2&quot; /&gt;
+    &lt;Server Name=&quot;webserver2&quot; IpAddress=&quot;192.168.10.44&quot; 
+       Port=&quot;10099&quot; Adjacents=&quot;emre_pc,webserver1&quot; /&gt;
+  &lt;/Servers&gt;</strong>
+  &lt;Applications&gt;
+    ...
+  &lt;/Applications&gt;
+  &lt;Routes&gt;
+    ...
+  &lt;/Routes&gt;
+&lt;/MDSConfiguration&gt;</pre>
+
+<p>Surely, this configuration is made according to your real network. You must install DotNetMQ on all servers in the graph. Also, you must configure the same graph on all servers (you can easily copy the server nodes from the XML to the other servers).</p>
+
+<p>DotNetMQ uses a <strong>short path</strong> algorithm to send the messages (if no manual route is defined in the settings file). Consider an <strong>Application A</strong> that is running on <strong>halil_pc</strong> and sending a message to <strong>Application B</strong> on <strong>webserver2</strong>. The path is simply: Application A -&gt; <strong>halil_pc -&gt; emre_pc -&gt; webserver2</strong> -&gt; Application B. halil_pc knows the next forwarding server (emre_pc) by using the server graph definition.</p>
+
+<p>Lastly, the <em>MDSSettings.design.xml</em> file contains the server design information (locations of nodes on the screen). This is just needed in the server graph window in DotNetMQ Manager and not needed for the runtime of DotNetMQ.</p>
+
+<h3><a name="ConfApps"></a>Applications</h3>
+
+<p>As shown in Figure - 5, you can <strong>add/remove applications</strong> that are using DotNetMQ as a message broker. It is not needed to restart DotNetMQ for these changes. Application settings are also saved to the <em>MDSSettings.xml</em> file as shown below.</p>
+
+<pre lang="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;MDSConfiguration&gt;
+  ...
+  &lt;Applications&gt;
+    &lt;Application Name=&quot;Application1&quot; /&gt;
+    &lt;Application Name=&quot;Application2&quot; /&gt;
+  &lt;/Applications&gt;
+  ...
+&lt;/MDSConfiguration&gt;</pre>
+
+<p>An application must be in this list to be able to connect to DotNetMQ. If you directly change the XML file, you must restart the DotNetMQ server.</p>
+
+<h3><a name="CongRouting"></a>Routing / Load Balancing</h3>
+
+<p>A usable feature of DotNetMQ is routing. Routing settings (for now) are configured only in the XML settings file (<em>MDSSettings.xml</em>). You can see two types of routing in the settings file below:</p>
+
+<pre lang="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;MDSConfiguration&gt;
+  ...
+  &lt;Routes&gt;
+
+    &lt;Route Name=&quot;Route-App2&quot; DistributionType=&quot;Sequential&quot; &gt;
+      &lt;Filters&gt;
+        &lt;Filter DestinationServer=&quot;this&quot; DestinationApplication=&quot;Application1&quot; /&gt;
+      &lt;/Filters&gt;
+      &lt;Destinations&gt;
+        &lt;Destination Server=&quot;Server-A&quot; Application=&quot;Application1&quot; RouteFactor=&quot;1&quot; /&gt;
+        &lt;Destination Server=&quot;Server-B&quot; Application=&quot;Application1&quot; RouteFactor=&quot;1&quot; /&gt;
+        &lt;Destination Server=&quot;Server-C&quot; Application=&quot;Application1&quot; RouteFactor=&quot;1&quot; /&gt;
+    &lt;/Destinations&gt;
+    &lt;/Route&gt;
+
+    &lt;Route Name=&quot;Route-App2&quot; DistributionType=&quot;Random&quot; &gt;
+      &lt;Filters&gt;
+        &lt;Filter DestinationServer=&quot;this&quot; DestinationApplication=&quot;Application2&quot; /&gt; 
+        &lt;Filter SourceApplication=&quot;Application2&quot; TransmitRule=&quot;StoreAndForward&quot; /&gt; 
+    &lt;/Filters&gt;
+      &lt;Destinations&gt;
+        &lt;Destination Server=&quot;Server-A&quot; Application=&quot;Application2&quot; RouteFactor=&quot;1&quot; /&gt;
+        &lt;Destination Server=&quot;Server-B&quot; Application=&quot;Application2&quot; RouteFactor=&quot;3&quot; /&gt;
+      &lt;/Destinations&gt;
+    &lt;/Route&gt;
+    
+  &lt;/Routes&gt;
+  ...
+&lt;/MDSConfiguration&gt;</pre>
+
+<p>A <code>Route</code> node has two attribute: <code>Name</code> is a user-friendly name of the Route entry (does not affect routing) and <code>DistributionType</code> is the strategy of the routing. There are two types of routing strategies:</p>
+
+<ul>
+<li><code>Sequential</code>: Messages are routed to destination servers sequentially. The <code>RouteFactor</code> of destinations are considered while distributing.</li>
+
+<li><code>Random</code>: Messages are routed to destination servers randomly. Probability of selecting the server A is: (RouteFactor(A) / (Total of all RouteFactor values of all destinations in the route definition)).</li>
+</ul>
+
+<p><strong>Filters</strong> are used to decide which route to use for a message. If properties of a message are suitable for one of the filters, the message is routed. There are <strong>five conditions</strong> (XML attributes) to define a filter:</p>
+
+<ul>
+<li><code>SourceServer</code>: The first source server of the message. Can be <code>this</code> to indicate this server.</li>
+
+<li><code>SourceApplication</code>: Sender application of the message.</li>
+
+<li><code>DestinationServer</code>: Last destination server of the message. Can be <code>this</code> to indicate this server.</li>
+
+<li><code>DestinationApplication</code>: The application that will receive the message.</li>
+
+<li><code>TransmitRule</code>: One of these transmit rules: <code>StoreAndForward</code>, <code>DirectlySend</code>, or <code>NonPersistent</code>.</li>
+</ul>
+
+<p>If one or more condition is not declared, it is not considered while filtering messages. So, if all the conditions are empty (or not declared), all messages are fit to this filter. A filter is selected for a message only if all the conditions are fit to the message. If a message is proper for (at least) one of the filters of a route, the route is selected and used.</p>
+
+<p><strong>Destinations</strong> are used to route messages to other servers. One of the destinations is selected according to the <code>DistributionType</code> property of the <code>Route</code> entry (explained before). A destination <strong>must define three attributes</strong>:</p>
+
+<ul>
+<li><code>Server</code>: Destination server. Can be <code>this</code> to indicate this server.</li>
+
+<li><code>Application</code>: Destination application. Destination application is generally defined as same as the original destination, but you can <strong>redirect</strong> a message to another application than its original destination application.</li>
+
+<li><code>RouteFactor</code>: This property is used to indicate the relative selection ratio of a destination. The <code>RouteFactor</code> attribute can be used for <strong>load balancing</strong>. If you want to distribute messages to all servers equally, you can define this as 1 for all destinations. But if you have two servers and one of them is more powerful than other, you can select the first server twice more than the second one by defining the appropriate route factors.</li>
+</ul>
+
+<p>You <strong>must restart</strong> DotNetMQ after changing routes.</p>
+
+<h3><a name="ConfOther"></a>Other Settings</h3>
+
+<p>DotNetMQ currently supports three <strong>storage</strong> types: <strong>SQLite</strong> (default), <strong>MySQL</strong>, and <strong>Memory</strong>. You can change the storage type in the <em>MDSSettings.xml</em> file.</p>
+
+<pre lang="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;MDSConfiguration&gt;
+  ...
+  &lt;Settings&gt;
+    &lt;Setting Key=&quot;ThisServerName&quot; Value=&quot;halil_pc&quot; /&gt;
+    &lt;Setting Key=&quot;StorageType&quot; Value=&quot;SQLite&quot; /&gt;
+  &lt;/Settings&gt;
+  ...
+&lt;/MDSConfiguration&gt;</pre>
+
+<p>The storage types must be one of the following values:</p>
+
+<ul>
+<li><strong>SQLite</strong>: Uses the SQLite database system. This is the default storage type. Uses the <em>{DotNetMQ-Install-Directory}\SqliteDB\MDS.s3db</em> file as the database.</li>
+<li><strong>MSSQL</strong>: Uses a Microsoft SQL Server database.  You must supply the <code>ConnectionString</code> setting as the connection string (will be explained).</li>
+
+<li><strong>MySQL-ODBC</strong>: Uses a MySQL database with ODBC. You must supply the <code>ConnectionString</code> setting as the connection string.</li>
+
+<li><strong>MySQL-Net</strong>: Uses a MySQL database with a <strong>.NET Adapter</strong>. You must supply the <code>ConnectionString</code> setting as connection string.</li>
+
+<li><strong>Memory</strong>: Uses memory as the storage device. In this case, persistent messages are lost if DotNetMQ is stopped.</li>
+</ul>
+
+<p>Here is a sample configuration to use the <strong>MySQL-ODBC</strong> storage type:</p>
+
+<pre lang="xml">&lt;Settings&gt;
+    &lt;Setting Key=&quot;ThisServerName&quot; Value=&quot;halil_pc&quot; /&gt;
+    &lt;Setting Key=&quot;StorageType&quot; Value=&quot;MySQL-ODBC&quot; /&gt;
+    &lt;Setting Key=&quot;ConnectionString&quot; 
+       Value=&quot;uid=root;server=localhost;driver={MySQL ODBC 3.51 Driver};database=mds&quot; /&gt;
+  &lt;/Settings&gt;</pre>
+
+<p>You can find needed files in the <em><strong>Setup\Databases</strong></em> folder (in the DotNetMQ installation folder) that are needed to create database and tables that are used by DotNetMQ. Feel free to ask questions to me  if you have a problem.</p>
+<p>There is also another setting to define the name of the current/this server (<code>ThisServerName</code>). It must be one of the servers in the <code>Servers</code> section. If you  use the DotNetMQ Manager to edit your servers graph, it is automatically set.</p>
+<h2><a name="MessagingNetwork"></a>Messaging Over Network</h2>
+
+<p>Sending a message to an application on a remote server is easy as sending a message to an application on the current server.</p>
+
+<h3><a name="ASimpleApp"></a>A Simple Application</h3>
+
+<p>Let's consider the network below.</p>
+
+<p><img width="396" height="376" alt="Messaging Over Network" src="DotNetMQ/08_NetworkMessaging.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 8: Messaging of two applications over network with DotNetMQ.</div>
+
+<p>There is an application (Application1) running on ServerA that wants to send a message to another application (Application2) on ServerC and there is no direct connection between ServerA and ServerC because of the firewall rules. Let's change the applications we developed in the <strong>First Applications</strong> section.</p>
+
+<p>There is not even a single change in Application2. Just run Application2 in ServerC and wait for incoming messages.</p>
+
+<p>There is a minor change in Application1 on how we send a message. It must set the <code>DestinationServerName</code> of the message as <strong>ServerC</strong>.</p>
+
+<pre lang="jscript">var message = mdsClient.CreateMessage();
+message.DestinationServerName = &quot;ServerC&quot;; //Set destination server name here!
+message.DestinationApplicationName = &quot;Application2&quot;;
+message.MessageData = Encoding.UTF8.GetBytes(messageText);
+message.Send();</pre>
+
+<p>That's all. You do not have to know where ServerC is, for a direct connection to ServerC... They are all defined in the DotNetMQ settings. Note that if you do not set the <code>DestinationServerName</code> of a message, it is assumed as <strong>current/this</strong> server and DotNetMQ sends the message to the application on the same server. Also, if you define the necessary routings, you don't have to set the destination server: it is routed by DotNetMQ automatically.</p>
+
+<p>Surely, DotNetMQ settings must be properly set according to the server connections (server graph), and Application1 and Application2 must be <strong>registered</strong> to the DotNetMQ server as described in the <strong>Configuring DotNetMQ</strong> section.</p>
+
+<h3><a name="DistSmsProcess"></a>A Real Life Case: <strong>Distributed SMS Processor</strong></h3>
+
+<p>As you already saw, DotNetMQ can be used to build <strong>distributed</strong>, <strong>load balanced</strong> application systems. In this section, I'll discuss a real life scenario: A distributed SMS process system.</p>
+
+<p>Assume that there is a short message (SMS) service that is used for polling a music competition. After all competitors sing their songs, audience send messages like &quot;VOTE 103&quot; to our SMS service to vote for their favourite competitor (103 is a sample code to vote for a specific competitor). And assume that this polling is done in just 30 minutes and approximately five million people will send SMSs to our service.</p>
+
+<p>We will receive every message, process it (parse the SMS text, update the database to increase the vote count of the competitor) and send a confirmation message to the sender of the SMS. We must receive messages from two servers, process messages on four servers, and send confirmation messages from two servers. We have totally eight servers. Let's see our complete system diagram:</p>
+
+<p><img width="600" height="480" alt="SMS System" src="DotNetMQ/09_DistSmsSystem.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 9: A distributed SMS processing system</div>
+
+<p>There are three types of applications: <strong>Receiver</strong>, <strong>Processor</strong>, and <strong>Sender</strong>. You can use DotNetMQ as the message queue and load balancer in such a scenario to build a distributed, scalable message processing system by configuring the server graph and routes as described in the <strong>Configuring DotNetMQ</strong> section.</p>
+
+<h2><a name="ReqRepMess"></a>Request/Reply Style Messaging with DotNetMQ</h2>
+
+<p>In most cases, an application sends a message to another application and gets a response message. DotNetMQ has <strong>built-in support</strong> for this type of messaging. Think about a service that is used to query a stock status. There are two types of messages:</p>
+
+<pre lang="cs">[Serializable]
+public class <strong>StockQueryMessage</strong>
+{
+    public string StockCode { get; set; }
+}
+
+[Serializable]
+public class <strong>StockQueryResultMessage</strong>
+{
+    public string StockCode { get; set; }
+    public int ReservedStockCount { get; set; }
+    public int TotalStockCount { get; set; }
+}</pre>
+
+<p>A simple <strong>Stock server</strong> code is shown below.</p>
+
+<pre lang="cs">using System;
+using MDS;
+using MDS.Client;
+using StockCommonLib;
+
+namespace StockServer
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var mdsClient = new MDSClient(&quot;StockServer&quot;);
+            mdsClient.MessageReceived += MDSClient_MessageReceived;
+
+            mdsClient.Connect();
+
+            Console.WriteLine(&quot;Press enter to exit...&quot;);
+            Console.ReadLine();
+
+            mdsClient.Disconnect();
+        }
+
+        static void MDSClient_MessageReceived(object sender, 
+                    MessageReceivedEventArgs e)
+        {
+            //Get message
+            var stockQueryMessage = 
+                GeneralHelper.DeserializeObject(e.Message.MessageData) 
+                as StockQueryMessage;
+            if (stockQueryMessage == null)
+            {
+                return;
+            }
+
+            //Write message content
+            Console.WriteLine(&quot;Stock Query Message for: &quot; + 
+                              stockQueryMessage.StockCode);
+
+            //Get stock counts from a database...
+            int reservedStockCount;
+            int totalStockCount;
+            switch (stockQueryMessage.StockCode)
+            {
+                case &quot;S01&quot;:
+                    reservedStockCount = 14;
+                    totalStockCount = 80;
+                    break;
+                case &quot;S02&quot;:
+                    reservedStockCount = 0;
+                    totalStockCount = 25;
+                    break;
+                default: //Stock does not exists!
+                    reservedStockCount = -1;
+                    totalStockCount = -1;
+                    break;
+            }
+
+            //Create a reply message for stock query
+            var stockQueryResult = new StockQueryResultMessage
+                                       {
+                                           StockCode = stockQueryMessage.StockCode,
+                                           ReservedStockCount = reservedStockCount,
+                                           TotalStockCount = totalStockCount
+                                       };
+            
+            //Create a MDS response message to send to client
+            var responseMessage = e.Message.<strong>CreateResponseMessage()</strong>;
+            responseMessage.MessageData = 
+               GeneralHelper.SerializeObject(stockQueryResult);
+
+            //Send message
+            responseMessage.<strong>Send()</strong>;
+
+            //Acknowledge the original request message.
+            //So, it will be deleted from queue.
+            e.Message.<strong>Acknowledge()</strong>;
+        }
+    }
+}</pre>
+
+<p>The stock server listens for incoming <code>StockQueryMessage</code> objects and sends a <code>StockQueryResultMessage</code> to the sender. To be simple, I did not select stocks from a database. A response message is created by the <code>CreateResponseMessage(</code><strong>)</strong> method of the incoming message. Lastly, the message is acknowledged after a response is sent. Now I will show a simple stock client code to get stock information from a server:</p>
+
+<pre lang="cs">using System;
+using MDS;
+using MDS.Client;
+using MDS.Communication.Messages;
+using StockCommonLib;
+
+namespace StockApplication
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(&quot;Press enter to query a stock status&quot;);
+            Console.ReadLine();
+
+            //Connect to DotNetMQ
+            var mdsClient = new MDSClient(&quot;StockClient&quot;);
+            mdsClient.MessageReceived += mdsClient_MessageReceived;
+            mdsClient.Connect();
+
+            //Create a stock request message
+            var stockQueryMessage = new StockQueryMessage { StockCode = &quot;S01&quot; };
+            
+            //Create a MDS message
+            var requestMessage = mdsClient.CreateMessage();
+            requestMessage.DestinationApplicationName = &quot;StockServer&quot;;
+            requestMessage.TransmitRule = MessageTransmitRules.NonPersistent;
+            requestMessage.MessageData = GeneralHelper.SerializeObject(stockQueryMessage);
+
+<strong>            //Send message and get response
+            var responseMessage = requestMessage.SendAndGetResponse();</strong>
+
+            //Get stock query result message from response message
+            var stockResult = (StockQueryResultMessage) 
+              GeneralHelper.DeserializeObject(responseMessage.MessageData);
+
+            //Write stock query result
+            Console.WriteLine(&quot;StockCode          = &quot; + stockResult.StockCode);
+            Console.WriteLine(&quot;ReservedStockCount = &quot; + stockResult.ReservedStockCount);
+            Console.WriteLine(&quot;TotalStockCount    = &quot; + stockResult.TotalStockCount);
+
+            //Acknowledge received message
+            responseMessage.<strong>Acknowledge()</strong>;
+
+            Console.ReadLine();
+
+            //Disconnect from DotNetMQ server.
+            mdsClient.Disconnect();
+        }
+
+        static void mdsClient_MessageReceived(object sender, 
+                    MessageReceivedEventArgs e)
+        {
+            //Simply acknowledge other received messages
+            e.Message.Acknowledge();
+        }
+    }
+}</pre>
+
+<p>In the sample above, <code>TransmitRule</code> is selected as <code>NonPersistent</code> to show a sample usage. Surely, you can send <code>StoreAndForward</code> (persistent) messages. Here is a sample screenshot of the running applications:</p>
+
+<p><img width="379" height="213" alt="Sample Request Reply Messaging" src="DotNetMQ/10_StockService.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 10: Request/Reply style messaging applications.</div>
+
+<h2><a name="SOA"></a><strong>Service-Oriented</strong> Architecture in DotNetMQ</h2>
+
+<p><strong>SOA</strong> (Service-Oriented Architecture) has been a popular concept for many years. Web Services and WCF are two major solutions to SOA. Generally, it is not expected to support SOA from a Message Queue system. Also messaging is an asynchronous and loosely coupled process while a Web Service method call is typically synchronous and tight coupled. Even (as you saw in the previous sample applications) messaging is not as easy as calling a remote method. But when your message count increases, your application becomes complicated and harder to maintain.</p>
+
+<p><strong>DotNetMQ supports remote method invocation mechanism upon persistent or non-persistent messages</strong>. So you can call a remote method asynchronously that is guaranteed to be called and guaranteed to be succeed!</p>
+
+<h3><a name="SampleMailSms"></a>Sample Application: <strong>SMS/Mail Sender</strong></h3>
+
+<p>Here we will develop a simple service that can be used to send SMS and e-mail. Maybe it is not needed to write a service for sending an email/SMS, all applications can do it themselves. But imagine that you have many applications that are sending emails. What if the mail server has a problem while sending an email? The application must try until it successfully sends the email. So you must build a queue mechanism in your application to try and send the email again and again. At the worse case, your application may be a short time running application (such as a Web Service) or must be closed before sending the email. But you have to send the email when the mail servers come online and the mail must not be lost.</p>
+<p>In this case, you can develop a separate mail/SMS service that will try to send the SMS/mail until it is successfully sent. You can develop a mail service that receives mail requests over DotNetMQ and acknowledge requests (messages) only if the email is successfully sent. If sending fails, just do not acknowledge (or reject) the message, thus it will be tried again later.</p>
+
+<h4><a name="MailService"></a>Service</h4>
+
+<p>We will first develop the mail/SMS service. To do this, we must define a class that is delivered from the <code>MDSService</code> base class:</p>
+
+<pre lang="cs">using System;
+using MDS.Client.MDSServices;
+
+namespace SmsMailServer
+{
+    [<strong>MDSService</strong>(Description = &quot;This service is a &quot; + 
+              &quot;sample mail/sms service.&quot;, Version = &quot;1.0.0.0&quot;)]
+    public class MyMailSmsService : <strong>MDSService</strong>
+    {
+        //All parameters and return values can be defined.
+        [<strong>MDSServiceMethod</strong>(Description = &quot;This method is used send an SMS.&quot;)]
+        public void SendSms(
+            [MDSServiceMethodParameter(&quot;Phone number to send SMS.&quot;)] string phone,
+            [MDSServiceMethodParameter(&quot;SMS text to be sent.&quot;)] string smsText)
+        {
+            //Process SMS
+            Console.WriteLine(&quot;Sending SMS to phone: &quot; + phone);
+            Console.WriteLine(&quot;Sms Text: &quot; + smsText);
+
+            //Acknowledge the message
+            IncomingMessage.Acknowledge();
+        }
+
+        //You do not have to define any parameters
+        [<strong>MDSServiceMethod</strong>]
+        public void SendEmail(string emailAddress, string header, string body)
+        {
+            //Process email
+            Console.WriteLine(&quot;Sending an email to &quot; + emailAddress);
+            Console.WriteLine(&quot;Header: &quot; + header);
+            Console.WriteLine(&quot;Body  : &quot; + body);
+
+            //Acknowledge the message
+            IncomingMessage.Acknowledge();
+        }
+
+        // A simple method just to show return values.
+        [<strong>MDSServiceMethod</strong>]
+        [return: MDSServiceMethodParameter(&quot;True, if phone number is valid.&quot;)]
+        public bool IsValidPhone([MDSServiceMethodParameter(
+               &quot;Phone number to send SMS.&quot;)] string phone)
+        {
+            //Acknowledge the message
+            IncomingMessage.Acknowledge();
+            
+            //Return result
+            return (phone.Length == 10);
+        }
+    }
+}</pre>
+
+<p>As you can see, it is just a regular C# class decorated with attributes. The <code>MDSService</code> and <code>MDSServiceMethod</code> attributes must be defined and all other attributes are optional (but it is good to write them). We will see soon why they are used). Your service methods must have the <code>MDSServiceMethod</code> attribute. If you do not want to expose some of your methods, simply do not add the <code>MDSServiceMethod</code> attribute.</p>
+
+<p>We must also <strong>acknowledge</strong> the message in the service method. Otherwise, the message (that caused this method call) will not be deleted from the message queue and our method will be called again. We can also <strong>reject</strong> the message if we can not process it (for example, if the mail server is not working and we can not send emails). If we reject the message, it will be sent to us later (<strong>reliability</strong>). You can reach the original message using the <code>IncomingMessage</code> property of the <code>MDSService</code> class. Also, you can get a remote application's (that called the service method) information using the <code>RemoteApplication</code> property.</p>
+
+<p>After creating a proper service class, we must create an application to run it. Here is a simple console application that runs our <code>MyMailSmsService</code>:</p>
+
+<pre lang="cs">using System;
+using MDS.Client.MDSServices;
+
+namespace SmsMailServer
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (var service = 
+                      new <strong>MDSServiceApplication</strong>(&quot;<strong>MyMailSmsService</strong>&quot;))
+            {
+                service.<strong>AddService</strong>(new <strong>MyMailSmsService()</strong>);
+                service.<strong>Connect()</strong>;
+
+                Console.WriteLine(&quot;Press any key to stop service&quot;);
+                Console.ReadLine();
+            }
+        }
+    }
+}</pre>
+
+<p>As you can see, it is just three lines of code to create and run a service. Since <code>MDSService</code> is disposable, you can use a <code>using</code> statement. Also, you can close the service manually with the <code>Disconnect</code> method of <code>MDSServiceApplication</code>. You can run more than one service on a single <code>MDSServiceApplication</code> using the <code>AddService</code> method.</p>
+
+<h4><a name="MailClent"></a><strong>Client</strong></h4>
+
+<p>To develop an application that uses a DotNetMQ service, you must create a <strong>service proxy</strong> (like Web Services and WCF). To do this, you can use the <strong>MDSServiceProxyGenerator</strong> tool. First, compile your service project, than run <em>MDSServiceProxyGenerator.exe</em> (in the DotNetMQ installation folder).</p>
+
+<p><img width="600" height="212" alt="Proxy Generating" src="DotNetMQ/11_ProxyGenerateTool.gif" complete="true" /></p>
+
+<div class="Caption">Figure - 11: Generating a proxy class for a service in DotNetMQ.</div>
+
+<p>Select your service <strong>assembly</strong> file (<em>SmsMailServer.exe</em> in this sample project). You can select the <strong>service class</strong> or generate proxies of all services in a given assembly. Enter a <strong>namespace</strong> and the <strong>target folder</strong> to <strong>generate the proxy class</strong>. After generating the proxy class, you can <strong>add</strong> it to your project.</p>
+
+<p>I will not show the internals of this proxy class and you do have to know it (you can see it in the source code, it is a very simple class). Your method/parameter <strong>attributes</strong> are used to generate the <strong>code comments</strong> in this proxy file.</p>
+
+<p>After adding the generated proxy class to our project, we can simply send messages to the service just like <strong>simple method calls</strong>:</p>
+
+<pre lang="cs">using System;
+using MDS.Client;
+using MDS.Client.MDSServices;
+using SampleService;
+
+namespace SmsMailClient
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(&quot;Press enter to test SendSms method&quot;);
+            Console.ReadLine();
+
+            //Application3 is name of an application that sends sms/email.
+            using (var serviceConsumer = new MDSServiceConsumer(&quot;Application3&quot;))
+            {
+                //Connect to DotNetMQ server
+                serviceConsumer.Connect();
+
+                //Create service proxy to call remote methods
+                var service = new MyMailSmsServiceProxy(serviceConsumer, 
+                    new MDSRemoteAppEndPoint(&quot;MyMailSmsService&quot;));
+
+                <strong>//Call SendSms method</strong>
+                <strong>service.SendSms(&quot;3221234567&quot;, &quot;Hello service!&quot;);</strong>
+            }
+        }
+    }
+}</pre>
+
+<p>You can also call other methods of the service, and get return values as regular method calls. Actually, your method calls are translated to reliable messages. For instance, even if the remote application (<code>MyMailSmsService</code>) is not running when <code>SendSms</code> is called, it is called when the service starts to run, so your method calls are also guarantied to be called.</p>
+
+<p>You can change the transmit rule for messaging using the <code>TransmitRule</code> property of the service proxy. If a service method returns <code>void</code>, its transmit rule is <code>StoreAndForward</code> by default. If a service method returns a value, the method call can not be made reliable (since the method call is synchronous and waiting a result), it's rule is <code>DirectlySend</code>.</p>
+
+<p>You can choose any type as method parameters. If it is a primary type (<code>string</code>, <code>int</code>, <code>byte</code>...) there is no need for additional settings but if you want to use your own classes as a method parameter, the class must be marked as <code>Serializable</code> since DotNetMQ uses binary serialization for parameters.</p>
+
+<p><strong>Note</strong> that you must <strong>register MyMailSmsService</strong> and <strong>Application3</strong> to DotNetMQ before running this sample.</p>
+
+<h2><a name="WebServices"></a>Web Services Support</h2>
+
+<p>Surely, you can connect to DotNetMQ in a Web Service since it is also a .NET application. But, what if you want to write an ASP.NET Web method to handle messages for an application (and can reply with a message in the same context)? Web Services are suitable for such Request/Reply style method calls.</p>
+
+<p>DotNetMQ supports ASP.NET web services and can deliver messages to Web Services. There is a template web service in  samples (in download files) to accomplish that. It is defined as below:</p>
+
+<pre lang="cs">using System;
+using System.Web.Services;
+using MDS.Client.WebServices;
+
+[WebService(Namespace = &quot;http://www.dotnetmq.com/mds&quot;)]
+[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+public class MDSAppService : WebService
+{
+    /// &lt;summary&gt;
+    /// MDS server sends messages to this method.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;bytesOfMessage&quot;&gt;Byte array form of message&lt;/param&gt;
+    /// &lt;returns&gt;Response message to incoming message&lt;/returns&gt;
+    [WebMethod(Description = &quot;Receives incoming messages to this web service.&quot;)]
+    public byte[] ReceiveMDSMessage(byte[] bytesOfMessage)
+    {
+        var message = WebServiceHelper.DeserializeMessage(bytesOfMessage);
+        try
+        {
+            var response = ProcessMDSMessage(message);
+            return WebServiceHelper.SerializeMessage(response);
+        }
+        catch (Exception ex)
+        {
+            var response = message.CreateResponseMessage();
+            response.Result.Success = false;
+            response.Result.ResultText = 
+              &quot;Error in ProcessMDSMessage method: &quot; + ex.Message;
+            return WebServiceHelper.SerializeMessage(response);
+        }
+    }
+
+    /// &lt;summary&gt;
+    /// Processes incoming messages to this web service.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;message&quot;&gt;Message to process&lt;/param&gt;
+    /// &lt;returns&gt;Response Message&lt;/returns&gt;
+    private IWebServiceResponseMessage 
+            ProcessMDSMessage(IWebServiceIncomingMessage message)
+    {
+        //Process message
+
+        //Send response/result
+        var response = message.CreateResponseMessage();
+        response.Result.Success = true;
+        return response;
+    }
+}</pre>
+
+<p>You do not change the <code>ReceiveMDSMessage</code> method and must process the message in the <code>ProcessMDSMessage</code> method as shown above. Also, you must define the <strong>address</strong> of your Web Service in <em>MDSSettings.xml</em> as shown below. You can also add Web Services using the DotNetMQ management tool.</p>
+
+<pre lang="xml">  ... 
+  &lt;Applications&gt;
+    &lt;Application Name=&quot;SampleWebServiceApp&quot;&gt;
+      &lt;Communication Type=&quot;WebService&quot; 
+        Url=&quot;http://localhost/SampleWebApplication/SampleService.asmx&quot; /&gt;
+    &lt;/Application&gt;
+  &lt;/Applications&gt;
+  ... </pre>
+
+<h2><a name="PerformanceDotNetMq"></a>Performance of DotNetMQ</h2>
+
+<p>There are some test results for messaging in DotNetMQ:</p>
+
+<p>Messaging:</p>
+
+<ul>
+<li><strong>10,000</strong> messages in ~<strong>25</strong> seconds as <strong>persistent</strong> (~<strong>400</strong> messages/second).</li>
+
+<li><strong>10,000</strong> messages in ~<strong>3.5</strong> seconds as <strong>non-persistent</strong> (~<strong>2,850</strong> messages/second).</li>
+</ul>
+
+<p>Method Calls (in DotNetMQ Services)</p>
+
+<ul>
+<li><strong>10,000</strong> method calls in ~<strong>25</strong> seconds as <strong>persistent</strong> (~<strong>400</strong> calls/second).</li>
+
+<li><strong>10,000</strong> method calls in ~<strong>8.7</strong> seconds as <strong>non-persistent</strong> (~<strong>1,150</strong> calls/second).</li>
+</ul>
+
+<p>Test Platform: Intel Core 2 Duo 3,00 GHz CPU. 2 GB RAM PC. Messages/calls are made between two applications running on the same computer.</p>
+
+<h2><a name="ArticleRefereces"></a>References</h2>
+
+<ul>
+<li><a name="ArticleRef1"></a>[1] Book: <strong>Enterprise Integration Patterns</strong>: Designing, Building, and Deploying Messaging Solutions by Gregor Hohpe, Bobby Woolf (Addison Wesley, 2003).</li>
+</ul>
+
+<h2><a name="ArticleHistory"></a>History</h2>
+
+<ul>
+<li><strong>23.05.2011</strong>
+  (DotNetMQ v0.9.1.0)
+  <ul>
+  <li>Added <strong>Microsoft SQL Server </strong>database support to store messages.</li>
+    <li>Changed <strong>MySQLConnectionString </strong>setting to <strong>ConnectionString</strong>.</li>
+    <li>Source codes updated.</li>
+    <li>Article is updated according to changes.</li>
+  </ul>
+</li>
+<li><strong>16.05.2011</strong> (DotNetMQ v0.9.0.0)
+  <ul>
+    <li>Added sample web service template to downloads.</li>
+    <li>Some fixes and additions to the article.</li>
+  </ul>
+</li>
+<li><strong>09.05.2011</strong> (DotNetMQ v0.9.0.0)</li>
+
+<ul>
+<li>First published.</li>
+</ul>
+</ul>
+
+</span>
+<!-- End Article -->
+
+
+
+
+</div> 
+</body>
+</html>

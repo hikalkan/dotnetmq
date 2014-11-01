@@ -1,0 +1,36 @@
+USE [mds]
+GO
+
+/****** Object:  Table [dbo].[Messages]    Script Date: 05/22/2011 22:18:28 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Messages](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MessageId] [nvarchar](100) NOT NULL,
+	[DestServer] [nvarchar](100) NOT NULL,
+	[NextServer] [nvarchar](100) NOT NULL,
+	[DestApplication] [nvarchar](100) NOT NULL,
+	[MessageData] [varbinary](max) NOT NULL,
+	[MessageDataLength] [int] NOT NULL,
+	[RecordDate] [datetime] NOT NULL,
+ CONSTRAINT [PK_messages] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_messages_RecordDate]  DEFAULT (getdate()) FOR [RecordDate]
+GO
+
